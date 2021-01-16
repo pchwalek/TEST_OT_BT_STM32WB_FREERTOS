@@ -1,0 +1,2 @@
+tps.c:57:6:TPS_Init	40	static
+tps.c:121:12:TPS_Update_Char	32	static

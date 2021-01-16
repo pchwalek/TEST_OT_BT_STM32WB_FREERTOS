@@ -155,11 +155,12 @@ void P2PS_STM_App_Notification(P2PS_STM_App_Notification_evt_t *pNotification)
         if(pNotification->DataTransfered.pPayload[1] == 0x02)
         {
 //            BSP_LED_Off(LED_BLUE);
-            APP_DBG("SYSTEM: SWITCH TO THREAD");
+        	APP_DBG_MSG("SYSTEM: SWITCH TO THREAD");
             APP_DBG_MSG("-- P2P APPLICATION SERVER 1 : SWITCH TO THREAD\n");
             APP_DBG_MSG(" \n\r");
             /* Set "Switch Protocol" Task */
-            UTIL_SEQ_SetTask(1<<CFG_Task_Switch_Protocol,CFG_SCH_PRIO_0);
+            //todo: this task should probably not happen
+//            UTIL_SEQ_SetTask(1<<CFG_Task_Switch_Protocol,CFG_SCH_PRIO_0);
         }
       }
 #endif

@@ -1,3 +1,0 @@
-crs_stm.c:99:30:CRS_Event_Handler	48	static
-crs_stm.c:177:6:CRS_STM_Init	112	static
-crs_stm.c:280:12:CRSAPP_Update_Char	32	static

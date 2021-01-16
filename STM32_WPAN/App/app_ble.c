@@ -1190,19 +1190,22 @@ void BLE_SVC_L2CAP_Conn_Update(uint16_t Connection_Handle)
  *************************************************************/
 void hci_notify_asynch_evt(void* pdata)
 {
-  UTIL_SEQ_SetTask(1 << CFG_TASK_HCI_ASYNCH_EVT_ID, CFG_SCH_PRIO_0);
+  UNUSED(pdata);
+  osThreadFlagsSet( HciUserEvtProcessId, 1 );
   return;
 }
 
 void hci_cmd_resp_release(uint32_t flag)
 {
-  UTIL_SEQ_SetEvt(1 << CFG_IDLEEVT_HCI_CMD_EVT_RSP_ID);
+  UNUSED(flag);
+  osSemaphoreRelease( SemHciId );
   return;
 }
 
 void hci_cmd_resp_wait(uint32_t timeout)
 {
-  UTIL_SEQ_WaitEvt(1 << CFG_IDLEEVT_HCI_CMD_EVT_RSP_ID);
+  UNUSED(timeout);
+  osSemaphoreAcquire( SemHciId, osWaitForever );
   return;
 }
 
@@ -1211,7 +1214,7 @@ static void BLE_UserEvtRx( void * pPayload )
   SVCCTL_UserEvtFlowStatus_t svctl_return_status;
   tHCI_UserEvtRxParam *pParam;
 
-  pParam = (tHCI_UserEvtRxParam *)pPayload; 
+  pParam = (tHCI_UserEvtRxParam *)pPayload;
 
   svctl_return_status = SVCCTL_UserEvtRx((void *)&(pParam->pckt->evtserial));
   if (svctl_return_status != SVCCTL_UserEvtFlowDisable)
@@ -1226,27 +1229,14 @@ static void BLE_UserEvtRx( void * pPayload )
 
 static void BLE_StatusNot( HCI_TL_CmdStatus_t status )
 {
-  uint32_t task_id_list;
   switch (status)
   {
     case HCI_TL_CmdBusy:
-      /**
-       * All tasks that may send an aci/hci commands shall be listed here
-       * This is to prevent a new command is sent while one is already pending
-       */
-      task_id_list = (1 << CFG_LAST_TASK_ID_WITH_HCICMD) - 1;
-      UTIL_SEQ_PauseTask(task_id_list);
-
+      osMutexAcquire( MtxHciId, osWaitForever );
       break;
 
     case HCI_TL_CmdAvailable:
-      /**
-       * All tasks that may send an aci/hci commands shall be listed here
-       * This is to prevent a new command is sent while one is already pending
-       */
-      task_id_list = (1 << CFG_LAST_TASK_ID_WITH_HCICMD) - 1;
-      UTIL_SEQ_ResumeTask(task_id_list);
-
+      osMutexRelease( MtxHciId );
       break;
 
     default:

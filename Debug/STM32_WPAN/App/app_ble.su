@@ -22,8 +22,8 @@ app_ble.c:1097:13:Adv_Cancel	16	static
 app_ble.c:1143:13:Switch_OFF_GPIO	4	static
 app_ble.c:1150:6:BLE_SVC_L2CAP_Conn_Update	48	static
 app_ble.c:1191:6:hci_notify_asynch_evt	16	static
-app_ble.c:1197:6:hci_cmd_resp_release	16	static
-app_ble.c:1203:6:hci_cmd_resp_wait	16	static
-app_ble.c:1209:13:BLE_UserEvtRx	24	static
-app_ble.c:1227:13:BLE_StatusNot	24	static
-app_ble.c:1258:6:SVCCTL_ResumeUserEventFlow	8	static
+app_ble.c:1198:6:hci_cmd_resp_release	16	static
+app_ble.c:1205:6:hci_cmd_resp_wait	16	static
+app_ble.c:1212:13:BLE_UserEvtRx	24	static
+app_ble.c:1230:13:BLE_StatusNot	16	static
+app_ble.c:1248:6:SVCCTL_ResumeUserEventFlow	8	static

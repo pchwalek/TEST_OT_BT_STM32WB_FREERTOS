@@ -50,7 +50,7 @@ Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/ip6.o: \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/stack/include/openthread/platform/toolchain.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/stack/include/openthread/platform/logging.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/stack/include/openthread/platform/radio.h \
- ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_thread_hci.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_thread_hci.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/stm32wbxx_core_interface_def.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_config_ftd.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/stack/include/openthread/ip6.h
@@ -155,7 +155,7 @@ Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/ip6.o: \
 
 ../Middlewares/ST/STM32_WPAN/thread/openthread/stack/include/openthread/platform/radio.h:
 
-../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_thread_hci.h:
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_thread_hci.h:
 
 ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/stm32wbxx_core_interface_def.h:
 

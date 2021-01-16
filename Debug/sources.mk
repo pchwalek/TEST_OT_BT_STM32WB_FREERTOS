@@ -33,12 +33,7 @@ Core/Src \
 Core/Startup \
 Drivers/STM32WBxx_HAL_Driver/Src \
 Middlewares/ST/STM32_WPAN/ble/core/auto \
-Middlewares/ST/STM32_WPAN/ble/core \
 Middlewares/ST/STM32_WPAN/ble/core/template \
-Middlewares/ST/STM32_WPAN/ble/menu \
-Middlewares/ST/STM32_WPAN/ble/mesh/MeshModel/Src \
-Middlewares/ST/STM32_WPAN/ble/mesh/PAL/STM32WB \
-Middlewares/ST/STM32_WPAN/ble/mesh/Src \
 Middlewares/ST/STM32_WPAN/ble/svc/Src \
 Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci \
 Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl \

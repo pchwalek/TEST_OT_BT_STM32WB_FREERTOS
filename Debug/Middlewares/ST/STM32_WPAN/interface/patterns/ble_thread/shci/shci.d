@@ -3,10 +3,10 @@ Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.o: \
  ../Middlewares/ST/STM32_WPAN/stm32_wpan_common.h \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
  ../Drivers/CMSIS/Include/cmsis_gcc.h \
- ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/shci_tl.h \
- ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/shci_tl.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h \
  ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h \
- ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h \
  ../Drivers/CMSIS/Device/ST/STM32WBxx/Include/stm32wbxx.h \
  ../Drivers/CMSIS/Device/ST/STM32WBxx/Include/stm32wb55xx.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
@@ -52,13 +52,13 @@ Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.o: \
 
 ../Drivers/CMSIS/Include/cmsis_gcc.h:
 
-../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/shci_tl.h:
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/shci_tl.h:
 
-../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h:
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h:
 
 ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h:
 
-../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h:
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h:
 
 ../Drivers/CMSIS/Device/ST/STM32WBxx/Include/stm32wbxx.h:
 

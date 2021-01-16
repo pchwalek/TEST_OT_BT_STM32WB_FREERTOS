@@ -39,7 +39,7 @@ Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_w
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart_ex.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_system.h \
- ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_thread_hci.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_thread_hci.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/stm32wbxx_core_interface_def.h \
  ../Middlewares/ST/STM32_WPAN/stm32_wpan_common.h \
  ../Drivers/CMSIS/Include/cmsis_compiler.h \
@@ -52,7 +52,7 @@ Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_w
  ../Middlewares/ST/STM32_WPAN/thread/openthread/stack/include/openthread/platform/logging.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/stack/include/openthread/platform/radio.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_config_ftd.h \
- ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_wb.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/stack/include/openthread/link.h \
  ../Middlewares/ST/STM32_WPAN/thread/openthread/stack/include/openthread/commissioner.h \
@@ -78,8 +78,8 @@ Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_w
  ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/stm32wbxx_core_interface_def.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_def.h \
  ../Middlewares/ST/STM32_WPAN/utilities/dbg_trace.h \
- ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h \
- ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h
 
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h:
 
@@ -159,7 +159,7 @@ Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_w
 
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_system.h:
 
-../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_thread_hci.h:
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl_thread_hci.h:
 
 ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/stm32wbxx_core_interface_def.h:
 
@@ -185,7 +185,7 @@ Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_w
 
 ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_config_ftd.h:
 
-../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h:
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h:
 
 ../Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_wb.h:
 
@@ -237,6 +237,6 @@ Middlewares/ST/STM32_WPAN/thread/openthread/core/openthread_api/openthread_api_w
 
 ../Middlewares/ST/STM32_WPAN/utilities/dbg_trace.h:
 
-../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h:
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h:
 
-../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h:
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h:

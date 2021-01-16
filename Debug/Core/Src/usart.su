@@ -1,0 +1,9 @@
+stm32wbxx_ll_bus.h:540:22:LL_AHB2_GRP1_EnableClock	24	static
+stm32wbxx_ll_bus.h:959:22:LL_APB1_GRP2_EnableClock	24	static
+stm32wbxx_ll_bus.h:1054:22:LL_APB1_GRP2_DisableClock	16	static
+stm32wbxx_ll_bus.h:1275:22:LL_APB2_GRP1_EnableClock	24	static
+stm32wbxx_ll_bus.h:1329:22:LL_APB2_GRP1_DisableClock	16	static
+usart.c:34:6:MX_LPUART1_UART_Init	8	static
+usart.c:68:6:MX_USART1_UART_Init	8	static
+usart.c:101:6:HAL_UART_MspInit	40	static
+usart.c:197:6:HAL_UART_MspDeInit	16	static

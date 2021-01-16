@@ -2,7 +2,7 @@ Middlewares/ST/STM32_WPAN/utilities/dbg_trace.o: \
  ../Middlewares/ST/STM32_WPAN/utilities/dbg_trace.c \
  ../Middlewares/ST/STM32_WPAN/utilities/utilities_common.h \
  ../Core/Inc/app_conf.h \
- ../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/hw.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/hw.h \
  ../Core/Inc/hw_conf.h ../Core/Inc/FreeRTOSConfig.h ../Core/Inc/hw_if.h \
  ../Drivers/CMSIS/Device/ST/STM32WBxx/Include/stm32wbxx.h \
  ../Drivers/CMSIS/Device/ST/STM32WBxx/Include/stm32wb55xx.h \
@@ -61,7 +61,7 @@ Middlewares/ST/STM32_WPAN/utilities/dbg_trace.o: \
 
 ../Core/Inc/app_conf.h:
 
-../Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/hw.h:
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/hw.h:
 
 ../Core/Inc/hw_conf.h:
 

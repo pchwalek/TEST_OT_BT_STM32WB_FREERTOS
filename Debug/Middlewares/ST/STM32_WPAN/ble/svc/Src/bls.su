@@ -1,4 +1,0 @@
-bls.c:68:30:BLS_Event_Handler	40	static
-bls.c:175:13:BLS_Update_Char_Value	40	static
-bls.c:273:6:BLS_Init	40	static
-bls.c:429:6:BLS_Update_Char	16	static

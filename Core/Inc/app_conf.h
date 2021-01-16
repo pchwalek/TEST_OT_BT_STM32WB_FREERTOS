@@ -258,6 +258,33 @@ typedef enum
 #define APPLI_PRINT_FILE_FUNC_LINE    0
 
 /* USER CODE BEGIN Defines */
+/**
+ * When set to 1, the traces are enabled in the BLE services
+ */
+#define CFG_DEBUG_BLE_TRACE     0
+
+/**
+ * Enable or Disable traces in application
+ */
+#define CFG_DEBUG_APP_TRACE     0
+
+#if (CFG_DEBUG_APP_TRACE != 0)
+#define APP_DBG_MSG                 PRINT_MESG_DBG
+#else
+#define APP_DBG_MSG                 PRINT_NO_MESG
+#endif
+
+#if ( (CFG_DEBUG_BLE_TRACE != 0) || (CFG_DEBUG_APP_TRACE != 0) )
+#define CFG_DEBUG_TRACE             1
+#endif
+
+#if (CFG_DEBUG_TRACE != 0)
+#undef CFG_LPM_SUPPORTED
+#undef CFG_DEBUGGER_SUPPORTED
+#define CFG_LPM_SUPPORTED         0
+#define CFG_DEBUGGER_SUPPORTED      1
+#endif
+
 /******************************************************************************
  * Application Config
  ******************************************************************************/
