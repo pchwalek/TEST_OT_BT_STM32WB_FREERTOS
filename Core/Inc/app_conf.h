@@ -529,6 +529,8 @@ typedef enum
 #define CFG_LED_SUPPORTED         1
 #define CFG_BUTTON_SUPPORTED      1
 #endif /* CFG_FULL_LOW_POWER */
+
+#define DATA_NOTIFICATION_MAX_PACKET_SIZE           240
 /* USER CODE END Defines */
 
 /******************************************************************************
@@ -561,6 +563,8 @@ typedef enum
   CFG_Task_Switch_Protocol,
 
   CFG_LAST_TASK_ID_WITH_HCICMD, /**< Shall be LAST in the list */
+
+
 } CFG_Task_Id_With_HCI_Cmd_t;
 
 /**< Add in that list all tasks that never send a ACI/HCI command */
@@ -602,10 +606,16 @@ typedef enum
   CFG_EVT_ACK_FROM_M0_EVT,
   CFG_EVT_SYNCHRO_BYPASS_IDLE,
   CFG_Evt_ThreadStop,
+
+  CFG_IDLEEVT_GAP_PROC_COMPLETE,
+  CFG_IDLEEVT_GATT_PROC_COMPLETE,
 } CFG_IdleEvt_Id_t;
+
 
 #define EVENT_ACK_FROM_M0_EVT            (1U << CFG_EVT_ACK_FROM_M0_EVT)
 #define EVENT_SYNCHRO_BYPASS_IDLE        (1U << CFG_EVT_SYNCHRO_BYPASS_IDLE)
+
+#define CFG_BLE_PERIPHERAL  1
 
 /* USER CODE END Defines */
 
@@ -660,6 +670,25 @@ typedef enum
 #define CFG_HRS_PROCESS_STACK_MEM             (0)
 #define CFG_HRS_PROCESS_PRIORITY              osPriorityNone
 #define CFG_HRS_PROCESS_STACK_SIZE            (128 * 5)
+
+// ADAPTED FROM ST BLE THROUGHPUT EXAMPLE
+#define CFG_TP_DW_PROCESS_NAME                  "DATA_WRITE"
+#define CFG_TP_DT_PROCESS_NAME                  "DATA_TRANSFER"
+#define CFG_TP_SW1_PROCESS_NAME                  "SWITCH_1"
+#define CFG_TP_SW2_PROCESS_NAME                  "SWITCH_2"
+#define CFG_TP_SW3_PROCESS_NAME                  "SWITCH_3"
+#define CFG_TP_LINK_CONFIG_PROCESS_NAME         "LINK_CONFIG"
+#define CFG_TP_GENERIC_PROCESS_ATTR_BITS             (0)
+#define CFG_TP_GENERIC_PROCESS_CB_MEM                (0)
+#define CFG_TP_GENERIC_PROCESS_CB_SIZE               (0)
+#define CFG_TP_GENERIC_PROCESS_STACK_MEM             (0)
+#define CFG_TP_GENERIC_PROCESS_PRIORITY              osPriorityNone
+#define CFG_TP_GENERIC_PROCESS_STACK_SIZE            (128 * 5)
+
+#define CFG_DEV_ID_PERIPH_SERVER                    (0x88)
+
+
+
 /* USER CODE END FreeRTOS_Defines */
 
 /******************************************************************************

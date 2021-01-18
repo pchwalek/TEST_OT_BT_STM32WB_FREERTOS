@@ -118,7 +118,11 @@ STM32_WPAN/App/app_ble.o: ../STM32_WPAN/App/app_ble.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
  ../Core/Inc/main.h \
- D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/core/ble_legacy.h
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/core/ble_legacy.h \
+ ../STM32_WPAN/App/dt_client_app.h ../STM32_WPAN/App/dt_server_app.h \
+ ../STM32_WPAN/App/dts.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/core/auto/ble_types.h \
+ ../STM32_WPAN/App/ble_conf.h
 
 ../Core/Inc/app_common.h:
 
@@ -369,3 +373,13 @@ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/
 ../Core/Inc/main.h:
 
 D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/core/ble_legacy.h:
+
+../STM32_WPAN/App/dt_client_app.h:
+
+../STM32_WPAN/App/dt_server_app.h:
+
+../STM32_WPAN/App/dts.h:
+
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/core/auto/ble_types.h:
+
+../STM32_WPAN/App/ble_conf.h:

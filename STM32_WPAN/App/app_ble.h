@@ -81,6 +81,8 @@ void APP_BLE_Key_Button1_Action(void);
 void APP_BLE_Key_Button2_Action(void);
 void APP_BLE_Key_Button3_Action(void);
 void APP_BLE_Stop(void);
+uint8_t APP_BLE_ComputeCRC8( uint8_t *DataPtr , uint8_t Datalen );
+
 /* USER CODE END EF */
 
 #ifdef __cplusplus
