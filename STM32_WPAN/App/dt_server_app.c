@@ -116,6 +116,7 @@ const osThreadAttr_t Button_SW3_Process_attr = {
 };
 
 /* Global variables ----------------------------------------------------------*/
+
 /* Functions Definition ------------------------------------------------------*/
 /* Private functions ----------------------------------------------------------*/
 //static void ButtonTriggerReceived(void);
@@ -135,6 +136,8 @@ extern uint8_t TimerDataThroughputWrite_Id;
 
 #define BOUNCE_THRESHOLD                20U
 #define LONG_PRESS_THRESHOLD            1000U
+
+
 /*************************************************************
  *
  * PUBLIC FUNCTIONS
@@ -152,9 +155,9 @@ void DTS_App_Init(void)
 
   DataWriteProcessId= osThreadNew(BLE_App_Delay_DataThroughput, NULL, &DataWriteProcess_attr);
   DataTransferProcessId= osThreadNew(SendData, NULL, &DataTransferProcess_attr);
-  Button_SW1_ProcessId= osThreadNew(ButtonTriggerReceived, NULL, &Button_SW1_Process_attr);
-  Button_SW2_ProcessId= osThreadNew(DT_App_Button2_Trigger_Received, NULL, &Button_SW2_Process_attr);
-  Button_SW3_ProcessId= osThreadNew(DT_App_Button3_Trigger_Received, NULL, &Button_SW3_Process_attr);
+//  Button_SW1_ProcessId= osThreadNew(ButtonTriggerReceived, NULL, &Button_SW1_Process_attr);
+//  Button_SW2_ProcessId= osThreadNew(DT_App_Button2_Trigger_Received, NULL, &Button_SW2_Process_attr);
+//  Button_SW3_ProcessId= osThreadNew(DT_App_Button3_Trigger_Received, NULL, &Button_SW3_Process_attr);
 
 
   /**
@@ -217,7 +220,9 @@ void DTS_Notification( DTS_STM_App_Notification_evt_t *pNotification )
       break;
       
     case DTC_NOTIFICATION_ENABLED:
-      BLE_SVC_L2CAP_Conn_Update_7_5();
+//      BLE_SVC_L2CAP_Conn_Update_7_5();
+      BLE_SVC_L2CAP_Conn_Update(BleApplicationContext.BleApplicationContext_legacy.connectionHandle);
+
       //DataTransferServerContext.NotificationClientTransferFlag = 0x01;
       break;
       

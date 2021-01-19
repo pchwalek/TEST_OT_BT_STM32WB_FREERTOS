@@ -48,122 +48,9 @@
 
 /* Private typedef -----------------------------------------------------------*/
 
-/**
- * security parameters structure
- */ 
-typedef struct _tSecurityParams
-{
-  /**
-   * IO capability of the device
-   */
-  uint8_t ioCapability;
 
-  /**
-   * Authentication requirement of the device
-   * Man In the Middle protection required?
-   */
-  uint8_t mitm_mode;
 
-  /**
-   * bonding mode of the device
-   */
-  uint8_t bonding_mode;
 
-  /**
-   * Flag to tell whether OOB data has
-   * to be used during the pairing process
-   */
-  uint8_t OOB_Data_Present; 
-
-  /**
-   * OOB data to be used in the pairing process if
-   * OOB_Data_Present is set to TRUE
-   */
-  uint8_t OOB_Data[16]; 
-
-  /**
-   * this variable indicates whether to use a fixed pin
-   * during the pairing process or a passkey has to be
-   * requested to the application during the pairing process
-   * 0 implies use fixed pin and 1 implies request for passkey
-   */
-  uint8_t Use_Fixed_Pin; 
-
-  /**
-   * minimum encryption key size requirement
-   */
-  uint8_t encryptionKeySizeMin;
-
-  /**
-   * maximum encryption key size requirement
-   */
-  uint8_t encryptionKeySizeMax;
-
-  /**
-   * fixed pin to be used in the pairing process if
-   * Use_Fixed_Pin is set to 1
-   */
-  uint32_t Fixed_Pin;
-
-  /**
-   * this flag indicates whether the host has to initiate
-   * the security, wait for pairing or does not have any security
-   * requirements.\n
-   * 0x00 : no security required
-   * 0x01 : host should initiate security by sending the slave security
-   *        request command
-   * 0x02 : host need not send the clave security request but it
-   * has to wait for paiirng to complete before doing any other
-   * processing
-   */
-  uint8_t initiateSecurity;
-}tSecurityParams;
-
-/**
- * global context
- * contains the variables common to all 
- * services
- */ 
-typedef struct _tBLEProfileGlobalContext
-{
-
-  /**
-   * security requirements of the host
-   */ 
-  tSecurityParams bleSecurityParam;
-
-  /**
-   * gap service handle
-   */
-  uint16_t gapServiceHandle;
-
-  /**
-   * device name characteristic handle
-   */ 
-  uint16_t devNameCharHandle;
-
-  /**
-   * appearance characteristic handle
-   */ 
-  uint16_t appearanceCharHandle;
-
-  /**
-   * connection handle of the current active connection
-   * When not in connection, the handle is set to 0xFFFF
-   */ 
-  uint16_t connectionHandle;
-
-  /**
-   * length of the UUID list to be used while advertising
-   */ 
-  uint8_t advtServUUIDlen;
-
-  /**
-   * the UUID list to be used while advertising
-   */ 
-  uint8_t advtServUUID[100];
-
-}BleGlobalContext_t;
 
 enum
 {
@@ -177,19 +64,7 @@ typedef enum
   GAP_PROC_SET_PHY,
 } GapProcId_t;
 
-typedef struct
-{
-  BleGlobalContext_t BleApplicationContext_legacy;
-   APP_BLE_ConnStatus_t Device_Connection_Status;
-   /**
-   * ID of the Advertising Timeout
-   */
-   uint8_t Advertising_mgr_timer_Id;
 
-  uint8_t SwitchOffGPIO_timer_Id;
-
-  uint8_t DeviceServerFound;
-}BleApplicationContext_t;
 /* USER CODE BEGIN PTD */
   
 /* USER CODE END PTD */
@@ -236,7 +111,7 @@ static const uint8_t BLE_CFG_IR_VALUE[16] = CFG_BLE_IRK;
 */
 static const uint8_t BLE_CFG_ER_VALUE[16] = CFG_BLE_ERK;
 
-PLACE_IN_SECTION("BLE_APP_CONTEXT") static BleApplicationContext_t BleApplicationContext;
+PLACE_IN_SECTION("BLE_APP_CONTEXT") BleApplicationContext_t BleApplicationContext;
 PLACE_IN_SECTION("BLE_APP_CONTEXT") static uint16_t AdvIntervalMin, AdvIntervalMax;
 
 P2PS_APP_ConnHandle_Not_evt_t handleNotification;
@@ -424,9 +299,7 @@ static void Adv_Cancel( void );
 static void Adv_Cancel_Req( void );
 #endif
 static void Switch_OFF_GPIO( void );
-#if(L2CAP_REQUEST_NEW_CONN_PARAM != 0)  
-static void BLE_SVC_L2CAP_Conn_Update(uint16_t Connection_Handle);
-#endif
+
 
 /* USER CODE BEGIN PFP */
 static void AdvUpdateProcess(void *argument);
@@ -434,6 +307,7 @@ static void Adv_Mgr( void );
 static void Adv_Update( void );
 static void Add_Advertisment_Service_UUID( uint16_t servUUID );
 static void HciUserEvtProcess(void *argument);
+void Adv_Request_TP( void );
 
 //static void Adv_Request(void);
 static void DataThroughput_proc(void);
@@ -516,11 +390,20 @@ void APP_BLE_Init_Dyn_1( void )
    */
   SVCCTL_Init();
 
+#if (L2CAP_REQUEST_NEW_CONN_PARAM != 0 )
+  index_con_int = 0;
+  mutex = 1;
+#endif
+
+
+  /* TODO: ERROR SOMEWHERE BELOW? */
+
+
   /**
    * Initialization of the BLE App Context
    */
   BleApplicationContext.Device_Connection_Status = APP_BLE_IDLE;
-  BleApplicationContext.BleApplicationContext_legacy.connectionHandle = 0xFFFF;  
+  BleApplicationContext.BleApplicationContext_legacy.connectionHandle = 0xFFFF;
 
   //TODO: REPLACED
 //  /**
@@ -543,12 +426,8 @@ void APP_BLE_Init_Dyn_1( void )
   aci_hal_set_radio_activity_mask(0x0006);
 #endif  
   
-#if (L2CAP_REQUEST_NEW_CONN_PARAM != 0 )
-  index_con_int = 0; 
-  mutex = 1; 
-#endif
 
-
+/* todo: error end */
 
 
   /**
@@ -570,6 +449,18 @@ void APP_BLE_Init_Dyn_1( void )
 //  UTIL_SEQ_RegTask( 1<<CFG_TASK_CONN_UPDATE_ID, UTIL_SEQ_RFU, Connection_Update);
 #endif
 
+
+
+
+
+//  /**
+//     * Initialize Data Client (GATT Client)
+//     */
+//  DTC_App_Init();
+
+
+  LinkConfigProcessId= osThreadNew(LinkConfiguration, NULL, &LinkConfigProcess_attr);
+
   BleApplicationContext.DeviceServerFound = NO_DEVICE_FOUND;
 
   /**
@@ -582,18 +473,6 @@ void APP_BLE_Init_Dyn_1( void )
    */
 
   DTS_App_Init();
-
-
-//  /**
-//     * Initialize Data Client (GATT Client)
-//     */
-//  DTC_App_Init();
-
-
-//  status = hci_le_set_data_length(BleApplicationContext.BleApplicationContext_legacy.connectionHandle,251,2120);
-
-  LinkConfigProcessId= osThreadNew(LinkConfiguration, NULL, &LinkConfigProcess_attr);
-
 
   //TODO: ripped from heartbeat. I think this sends the manufacturer information to the connecting device
   /**
@@ -1199,8 +1078,17 @@ static void Adv_Request(APP_BLE_ConnStatus_t New_Status)
         BleApplicationContext.BleApplicationContext_legacy.advtServUUID,
         0,
         0);
+//    ret = aci_gap_set_discoverable(ADV_IND,
+//            FAST_CONN_ADV_INTERVAL_MIN,
+//            FAST_CONN_ADV_INTERVAL_MAX,
+//            PUBLIC_ADDR,
+//            NO_WHITE_LIST_USE, /* use white list */
+//            sizeof(local_name), (uint8_t*) local_name, 0,
+//            NULL,
+//            6, 8);
     /* Update Advertising data */
     ret = aci_gap_update_adv_data(sizeof(manuf_data), (uint8_t*) manuf_data);
+//    ret = aci_gap_update_adv_data(22, (uint8_t*) manuf_data);
 
      if (ret == BLE_STATUS_SUCCESS)
     {
@@ -1331,6 +1219,41 @@ static void AdvUpdateProcess(void *argument)
   }
 }
 
+void Adv_Request_TP( void )
+{
+  tBleStatus result;
+
+  result = aci_gap_set_discoverable(ADV_IND,
+                                    FAST_CONN_ADV_INTERVAL_MIN,
+                                    FAST_CONN_ADV_INTERVAL_MAX,
+                                    PUBLIC_ADDR,
+                                    NO_WHITE_LIST_USE, /* use white list */
+                                    sizeof(local_name), (uint8_t*) local_name, 0,
+                                    NULL,
+                                    6, 8);
+  if (result == BLE_STATUS_SUCCESS)
+  {
+    APP_DBG_MSG("  \r\n\r");APP_DBG_MSG("** START ADVERTISING **  \r\n\r");
+  }
+  else
+  {
+    APP_DBG_MSG("** START ADVERTISING **  Failed \r\n\r");
+  }
+
+  /* Send Advertising data */
+  result = aci_gap_update_adv_data(22, (uint8_t*) manuf_data);
+
+  if (result == BLE_STATUS_SUCCESS)
+  {
+    APP_DBG_MSG("  \r\n\r");APP_DBG_MSG("** add ADV data **  \r\n\r");
+  }
+  else
+  {
+    APP_DBG_MSG("** add ADV data **  Failed \r\n\r");
+  }
+  return;
+}
+
 static void Adv_Update( void )
 {
   Adv_Request(APP_BLE_LP_ADV);
@@ -1398,6 +1321,7 @@ static void LinkConfiguration(void * argument)
 	UNUSED(argument);
 		  for(;;)
 		  {
+			    osThreadFlagsWait( 1, osFlagsWaitAny, osWaitForever);
   tBleStatus status;
 #if (CFG_BLE_CENTRAL != 0)
   uint8_t tx_phy;
@@ -1646,6 +1570,9 @@ void SVCCTL_ResumeUserEventFlow( void )
 }
 
 /* USER CODE BEGIN FD_WRAP_FUNCTIONS */
-
+void SVCCTL_InitCustomSvc( void )
+{
+  DTS_STM_Init();
+}
 /* USER CODE END FD_WRAP_FUNCTIONS */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
