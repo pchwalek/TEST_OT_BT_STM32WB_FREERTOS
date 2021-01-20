@@ -46,4 +46,5 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang \
 STM32_WPAN/App \
 STM32_WPAN/Target \
 Utilities/lpm/tiny_lpm \
+Utilities/sequencer \
 

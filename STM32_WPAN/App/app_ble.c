@@ -126,23 +126,37 @@ uint8_t index_con_int, mutex;
  * Advertising Data
  */
 #if (P2P_SERVER1 != 0)
-static const char local_name[] = { AD_TYPE_COMPLETE_LOCAL_NAME ,'P','2','P','S','R','V','1'};
-uint8_t manuf_data[14] = {
-    sizeof(manuf_data)-1, AD_TYPE_MANUFACTURER_SPECIFIC_DATA, 
-    0x01/*SKD version */,
-    CFG_DEV_ID_P2P_SERVER1 /* STM32WB - P2P Server 1*/,
-    0x00 /* GROUP A Feature  */, 
-    0x00 /* GROUP A Feature */,
-    CFG_FEATURE_THREAD_SWITCH /* GROUP B Feature */,
-    0x00 /* GROUP B Feature */,
-    0x00, /* BLE MAC start -MSB */
-    0x00,
-    0x00,
-    0x00,
-    0x00,
-    0x00, /* BLE MAC stop */
-};
+//static const char local_name[] = { AD_TYPE_COMPLETE_LOCAL_NAME ,'P','2','P','S','R','V','1'};
+//uint8_t manuf_data[14] = {
+//    sizeof(manuf_data)-1, AD_TYPE_MANUFACTURER_SPECIFIC_DATA,
+//    0x01/*SKD version */,
+//    CFG_DEV_ID_P2P_SERVER1 /* STM32WB - P2P Server 1*/,
+//    0x00 /* GROUP A Feature  */,
+//    0x00 /* GROUP A Feature */,
+//    CFG_FEATURE_THREAD_SWITCH /* GROUP B Feature */,
+//    0x00 /* GROUP B Feature */,
+//    0x00, /* BLE MAC start -MSB */
+//    0x00,
+//    0x00,
+//    0x00,
+//    0x00,
+//    0x00, /* BLE MAC stop */
+//};
 #endif
+
+#if (CFG_BLE_PERIPHERAL != 0)
+static const char local_name[] = { AD_TYPE_COMPLETE_LOCAL_NAME, 'D', 'T', '_', 'S', 'E', 'R', 'V', 'E', 'R' };
+#endif
+
+uint8_t index_con_int, mutex;
+
+uint8_t const manuf_data[22] = { 2, AD_TYPE_TX_POWER_LEVEL, 0x00 /* 0 dBm */, /* Trasmission Power */
+    10, AD_TYPE_COMPLETE_LOCAL_NAME, 'D', 'T', '_', 'S', 'E', 'R', 'V', 'E', 'R', /* Complete Name */
+    7, AD_TYPE_MANUFACTURER_SPECIFIC_DATA, 0x01/*SKD version */,
+    CFG_DEV_ID_PERIPH_SERVER, /* NUCLEO-Board WB - DT Periph Server*/
+    0x00 /*  */, 0x00 /*  */, 0x00 /*  */,
+    CFG_FEATURE_DT /* Data Throughput Service features */
+};
 /**
  * Advertising Data
  */
@@ -273,13 +287,13 @@ const osThreadAttr_t HciUserEvtProcess_attr = {
 };
 
 const osThreadAttr_t LinkConfigProcess_attr = {
-	.name = CFG_TP_DW_PROCESS_NAME,
+	.name = CFG_TP_LINK_CONFIG_PROCESS_NAME,
 	.attr_bits = CFG_TP_GENERIC_PROCESS_ATTR_BITS,
 	.cb_mem = CFG_TP_GENERIC_PROCESS_CB_MEM,
 	.cb_size = CFG_TP_GENERIC_PROCESS_CB_SIZE,
 	.stack_mem = CFG_TP_GENERIC_PROCESS_STACK_MEM,
 	.priority = CFG_TP_GENERIC_PROCESS_PRIORITY,
-	.stack_size = CFG_TP_GENERIC_PROCESS_STACK_SIZE
+	.stack_size = CFG_TP_GENERIC_PROCESS_STACK_SIZE * 2
 };
 
 uint8_t TimerDataThroughputWrite_Id;
@@ -312,7 +326,7 @@ void Adv_Request_TP( void );
 //static void Adv_Request(void);
 static void DataThroughput_proc(void);
 
-static void LinkConfiguration(void * argument);
+void LinkConfiguration(void * argument);
 /* USER CODE END PFP */
 
 /* Functions Definition ------------------------------------------------------*/
@@ -419,13 +433,13 @@ void APP_BLE_Init_Dyn_1( void )
   /**
    * Initialization of ADV - Ad Manufacturer Element - Support OTA Bit Mask
    */
-#if(BLE_CFG_OTA_REBOOT_CHAR != 0)  
+#if(BLE_CFG_OTA_REBOOT_CHAR != 0)
     manuf_data[sizeof(manuf_data)-8] = CFG_FEATURE_OTA_REBOOT;
 #endif
-#if(RADIO_ACTIVITY_EVENT != 0)  
+#if(RADIO_ACTIVITY_EVENT != 0)
   aci_hal_set_radio_activity_mask(0x0006);
-#endif  
-  
+#endif
+
 
 /* todo: error end */
 
@@ -448,15 +462,6 @@ void APP_BLE_Init_Dyn_1( void )
 //  UTIL_SEQ_RegTask( 1<<CFG_TASK_CONN_DEV_1_ID, UTIL_SEQ_RFU, Connect_Request);
 //  UTIL_SEQ_RegTask( 1<<CFG_TASK_CONN_UPDATE_ID, UTIL_SEQ_RFU, Connection_Update);
 #endif
-
-
-
-
-
-//  /**
-//     * Initialize Data Client (GATT Client)
-//     */
-//  DTC_App_Init();
 
 
   LinkConfigProcessId= osThreadNew(LinkConfiguration, NULL, &LinkConfigProcess_attr);
@@ -906,12 +911,12 @@ static void Ble_Tl_Init( void )
                             (uint8_t*) bd_addr);
 
   /* BLE MAC in ADV Packet */
-  manuf_data[ sizeof(manuf_data)-6] = bd_addr[5];
-  manuf_data[ sizeof(manuf_data)-5] = bd_addr[4];
-  manuf_data[ sizeof(manuf_data)-4] = bd_addr[3];
-  manuf_data[ sizeof(manuf_data)-3] = bd_addr[2];
-  manuf_data[ sizeof(manuf_data)-2] = bd_addr[1];
-  manuf_data[ sizeof(manuf_data)-1] = bd_addr[0];
+//  manuf_data[ sizeof(manuf_data)-6] = bd_addr[5];
+//  manuf_data[ sizeof(manuf_data)-5] = bd_addr[4];
+//  manuf_data[ sizeof(manuf_data)-4] = bd_addr[3];
+//  manuf_data[ sizeof(manuf_data)-3] = bd_addr[2];
+//  manuf_data[ sizeof(manuf_data)-2] = bd_addr[1];
+//  manuf_data[ sizeof(manuf_data)-1] = bd_addr[0];
   
   /**
    * Static random Address
@@ -958,7 +963,7 @@ static void Ble_Tl_Init( void )
 
   if (role > 0)
   {
-    const char *name = "STM32WB";
+    const char *name = "BLEcore";
     aci_gap_init(role, 0,
                  APPBLE_GAP_DEVICE_NAME_LENGTH,
                  &gap_service_handle, &gap_dev_name_char_handle, &gap_appearance_char_handle);
@@ -991,28 +996,45 @@ static void Ble_Tl_Init( void )
   /**
    * Initialize authentication
    */
-  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.mitm_mode = CFG_MITM_PROTECTION;
-  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.OOB_Data_Present = 0;
-  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMin = 8;
-  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMax = 16;
-  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Use_Fixed_Pin = 1;
-  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Fixed_Pin = 111111;
-  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.bonding_mode = 1;
+//  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.mitm_mode = CFG_MITM_PROTECTION;
+//  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.OOB_Data_Present = 0;
+//  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMin = 8;
+//  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMax = 16;
+//  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Use_Fixed_Pin = 1;
+//  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Fixed_Pin = 111111;
+//  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.bonding_mode = 1;
   for (index = 0; index < 16; index++)
   {
     BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.OOB_Data[index] = (uint8_t) index;
   }
+//
+//  aci_gap_set_authentication_requirement(BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.bonding_mode,
+//                                         BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.mitm_mode,
+//                                         0,
+//                                         0,
+//                                         BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMin,
+//                                         BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMax,
+//                                         BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Use_Fixed_Pin,
+//                                         BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Fixed_Pin,
+//                                         0
+//  );
+  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.mitm_mode = CFG_MITM_PROTECTION;
+  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMin = CFG_ENCRYPTION_KEY_SIZE_MIN;
+  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMax = CFG_ENCRYPTION_KEY_SIZE_MAX;
+  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Use_Fixed_Pin = CFG_USED_FIXED_PIN;
+  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Fixed_Pin = CFG_FIXED_PIN;
+  BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.bonding_mode = CFG_BONDING_MODE;
 
   aci_gap_set_authentication_requirement(BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.bonding_mode,
                                          BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.mitm_mode,
-                                         0,
-                                         0,
+                                         CFG_SC_SUPPORT,
+                                         CFG_KEYPRESS_NOTIFICATION_SUPPORT,
                                          BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMin,
                                          BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.encryptionKeySizeMax,
                                          BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Use_Fixed_Pin,
                                          BleApplicationContext.BleApplicationContext_legacy.bleSecurityParam.Fixed_Pin,
-                                         0
-  );
+                                         PUBLIC_ADDR
+										 );
 
   /**
    * Initialize whitelist
@@ -1316,7 +1338,7 @@ static void DataThroughput_proc(){
 }
 #endif
 
-static void LinkConfiguration(void * argument)
+void LinkConfiguration(void * argument)
 {
 	UNUSED(argument);
 		  for(;;)
@@ -1352,12 +1374,12 @@ static void LinkConfiguration(void * argument)
   }
 #endif
 
-  APP_DBG_MSG("set data length \n");
+//  APP_DBG_MSG("set data length \n");
   status = hci_le_set_data_length(BleApplicationContext.BleApplicationContext_legacy.connectionHandle,251,2120);
-  if (status != BLE_STATUS_SUCCESS)
-  {
-    APP_DBG_MSG("set data length command error \n");
-  }
+//  if (status != BLE_STATUS_SUCCESS)
+//  {
+//    APP_DBG_MSG("set data length command error \n");
+//  }
 
 #if ((CFG_ENCRYPTION_ENABLE != 0) && (CFG_BLE_CENTRAL != 0))
   GapProcReq(GAP_PROC_PAIRING);

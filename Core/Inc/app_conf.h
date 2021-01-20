@@ -259,6 +259,28 @@ typedef enum
 
 /* USER CODE BEGIN Defines */
 /**
+ * Define the different role supported
+ * In this application
+ * When set to 1, the device is central
+ * When set to 0, the device is peripheral
+ */
+#define CFG_BLE_CENTRAL     0
+
+#define CFG_SERVER_ONLY     0
+/**
+ * in this specific application, the device is either central
+ * or peripheral but cannot be both
+ */
+#undef CFG_ADV_BD_ADDRESS
+#if (CFG_BLE_CENTRAL != 0 )
+#define CFG_BLE_PERIPHERAL  0
+#define CFG_ADV_BD_ADDRESS 0xFFEEDDCCBBAA
+#else
+#define CFG_ADV_BD_ADDRESS 0x222222333333
+#define CFG_BLE_PERIPHERAL  1
+#endif
+
+/**
  * When set to 1, the traces are enabled in the BLE services
  */
 #define CFG_DEBUG_BLE_TRACE     0
@@ -356,6 +378,26 @@ typedef enum
 #define CFG_BLE_ERK     {0xfe,0xdc,0xba,0x09,0x87,0x65,0x43,0x21,0xfe,0xdc,0xba,0x09,0x87,0x65,0x43,0x21}
 
 /* USER CODE BEGIN Generic_Parameters */
+
+
+/**
+ * Define Secure Connections Support
+ */
+#define CFG_SECURE_NOT_SUPPORTED       (0x00)
+#define CFG_SECURE_OPTIONAL            (0x01)
+#define CFG_SECURE_MANDATORY           (0x02)
+
+#define CFG_SC_SUPPORT                 CFG_SECURE_OPTIONAL
+
+/**
+ * Define Keypress Notification Support
+ */
+#define CFG_KEYPRESS_NOT_SUPPORTED      (0x00)
+#define CFG_KEYPRESS_SUPPORTED          (0x01)
+
+#define CFG_KEYPRESS_NOTIFICATION_SUPPORT             CFG_KEYPRESS_NOT_SUPPORTED
+
+
 /**
  * SMPS supply
  * SMPS not used when Set to 0
@@ -371,7 +413,7 @@ typedef enum
 #define PUSH_BUTTON_SW3_EXTI_IRQHandler     EXTI1_IRQHandler
 
 
-#define P2P_SERVER1    1    /*1 = Device is Peripherique*/
+#define P2P_SERVER1    0    /*1 = Device is Peripherique*/
 #define P2P_SERVER2    0
 #define P2P_SERVER3    0
 #define P2P_SERVER4    0
@@ -485,7 +527,7 @@ typedef enum
 /**
  *  Source for the 32 kHz slow speed clock
  *  1 : internal RO
- *  0 : external crystal ( no calibration )
+ *  0 : external crystal ( no calibration )f
  */
 #define CFG_BLE_LSE_SOURCE  0
 
@@ -615,8 +657,6 @@ typedef enum
 #define EVENT_ACK_FROM_M0_EVT            (1U << CFG_EVT_ACK_FROM_M0_EVT)
 #define EVENT_SYNCHRO_BYPASS_IDLE        (1U << CFG_EVT_SYNCHRO_BYPASS_IDLE)
 
-#define CFG_BLE_PERIPHERAL  1
-
 /* USER CODE END Defines */
 
 /******************************************************************************
@@ -686,6 +726,7 @@ typedef enum
 #define CFG_TP_GENERIC_PROCESS_STACK_SIZE            (128 * 5)
 
 #define CFG_DEV_ID_PERIPH_SERVER                    (0x88)
+#define CFG_FEATURE_DT                              (0x70)
 
 
 

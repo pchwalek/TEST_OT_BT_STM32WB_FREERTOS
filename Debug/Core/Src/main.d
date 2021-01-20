@@ -65,7 +65,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
  ../Core/Inc/dma.h ../Core/Inc/main.h ../Core/Inc/usart.h \
  ../Core/Inc/rf.h ../Core/Inc/rtc.h ../Core/Inc/app_entry.h \
- ../Core/Inc/app_common.h ../Core/Inc/gpio.h
+ ../Core/Inc/app_common.h ../Core/Inc/gpio.h \
+ D:/dev/TEST_BLE_OT_CONC/Utilities/sequencer/stm32_seq.h
 
 ../Core/Inc/main.h:
 
@@ -216,3 +217,5 @@ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/
 ../Core/Inc/app_common.h:
 
 ../Core/Inc/gpio.h:
+
+D:/dev/TEST_BLE_OT_CONC/Utilities/sequencer/stm32_seq.h:

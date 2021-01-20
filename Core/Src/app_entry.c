@@ -62,6 +62,7 @@ PLACE_IN_SECTION("MB_MEM2") ALIGN(4) static TL_CmdPacket_t SystemCmdBuffer;
 PLACE_IN_SECTION("MB_MEM2") ALIGN(4) static uint8_t SystemSpareEvtBuffer[sizeof(TL_PacketHeader_t) + TL_EVT_HDR_SIZE + 255U];
 
 /* USER CODE BEGIN PV */
+PLACE_IN_SECTION("MB_MEM2") ALIGN(4) static uint8_t	BleSpareEvtBuffer[sizeof(TL_PacketHeader_t) + TL_EVT_HDR_SIZE + 255];
 
 /* USER CODE END PV */
 
@@ -77,7 +78,7 @@ const osThreadAttr_t ShciUserEvtProcess_attr = {
     .cb_size = CFG_SHCI_USER_EVT_PROCESS_CB_SIZE,
     .stack_mem = CFG_SHCI_USER_EVT_PROCESS_STACK_MEM,
     .priority = CFG_SHCI_USER_EVT_PROCESS_PRIORITY,
-    .stack_size = CFG_SHCI_USER_EVT_PROCESS_STACK_SIZE
+    .stack_size = CFG_SHCI_USER_EVT_PROCESS_STACK_SIZE * 2
 };
 
 /* Global function prototypes -----------------------------------------------*/
@@ -249,7 +250,7 @@ static void appe_Tl_Init( void )
   shci_init(APPE_SysUserEvtRx, (void*) &SHci_Tl_Init_Conf);
 
   /**< Memory Manager channel initialization */
-  tl_mm_config.p_BleSpareEvtBuffer = 0;
+  tl_mm_config.p_BleSpareEvtBuffer = BleSpareEvtBuffer;
   tl_mm_config.p_SystemSpareEvtBuffer = SystemSpareEvtBuffer;
   tl_mm_config.p_AsynchEvtPool = EvtPool;
   tl_mm_config.AsynchEvtPoolSize = POOL_SIZE;
