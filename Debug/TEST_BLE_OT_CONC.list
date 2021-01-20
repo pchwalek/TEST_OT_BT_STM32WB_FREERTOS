@@ -41698,8 +41698,8 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
  800f356:	4ba8      	ldr	r3, [pc, #672]	; (800f5f8 <SVCCTL_App_Notification+0x2e4>)
  800f358:	2200      	movs	r2, #0
  800f35a:	f883 2090 	strb.w	r2, [r3, #144]	; 0x90
-       Adv_Request(APP_BLE_FAST_ADV);
- 800f35e:	2001      	movs	r0, #1
+   Adv_Request(APP_BLE_LP_ADV);
+ 800f35e:	2002      	movs	r0, #2
  800f360:	f000 fa2a 	bl	800f7b8 <Adv_Request>
         handleNotification.P2P_Evt_Opcode = PEER_DISCON_HANDLE_EVT;
  800f364:	4ba5      	ldr	r3, [pc, #660]	; (800f5fc <SVCCTL_App_Notification+0x2e8>)
@@ -42806,7 +42806,7 @@ static void HciUserEvtProcess(void *argument)
 //  return;
 //}
 
-static void DataThroughput_proc(){
+void DataThroughput_proc(void){
  800f9dc:	b580      	push	{r7, lr}
  800f9de:	af00      	add	r7, sp, #0
 

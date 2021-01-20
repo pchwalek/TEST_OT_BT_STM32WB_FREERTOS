@@ -20835,6 +20835,7 @@ LOAD c:/st/stm32cubeide_1.4.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x000000000800f9c2       0x1a STM32_WPAN/App/app_ble.o
  .text.DataThroughput_proc
                 0x000000000800f9dc       0x18 STM32_WPAN/App/app_ble.o
+                0x000000000800f9dc                DataThroughput_proc
  .text.LinkConfiguration
                 0x000000000800f9f4       0x38 STM32_WPAN/App/app_ble.o
                 0x000000000800f9f4                LinkConfiguration

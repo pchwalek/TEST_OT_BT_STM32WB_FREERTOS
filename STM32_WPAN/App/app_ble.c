@@ -324,7 +324,7 @@ static void HciUserEvtProcess(void *argument);
 void Adv_Request_TP( void );
 
 //static void Adv_Request(void);
-static void DataThroughput_proc(void);
+void DataThroughput_proc(void);
 
 void LinkConfiguration(void * argument);
 /* USER CODE END PFP */
@@ -563,7 +563,12 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
         APP_DBG_MSG("\r\n\r** DISCONNECTION EVENT WITH CLIENT \n");
       }  
        /* restart advertising */
-       Adv_Request(APP_BLE_FAST_ADV);
+#ifndef DYNAMIC_MODE
+   Adv_Request(APP_BLE_FAST_ADV);
+#else
+   Adv_Request(APP_BLE_LP_ADV);
+#endif
+//       Adv_Request(APP_BLE_FAST_ADV);
  /*
 * SPECIFIC to P2P Server APP
 */     
@@ -1330,7 +1335,7 @@ static void HciUserEvtProcess(void *argument)
 //  return;
 //}
 
-static void DataThroughput_proc(){
+void DataThroughput_proc(void){
 
 //  UTIL_SEQ_SetTask(1 << CFG_TASK_DATA_WRITE_ID, CFG_SCH_PRIO_0);
 
