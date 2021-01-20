@@ -110,6 +110,7 @@ extern void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 //TODO: remove
 static void displayConcurrentMode(void);
+
 /* USER CODE END PFP */
 
 /* Functions Definition ------------------------------------------------------*/
@@ -132,6 +133,12 @@ void APPE_Init( void )
    * The default state of the Low Power Manager is to allow the Standby Mode so an request is needed here
    */
   UTIL_LPM_SetOffMode(1 << CFG_LPM_APP, UTIL_LPM_DISABLE);
+
+  BSP_LED_Init(LED_BLUE);
+   BSP_LED_Init(LED_GREEN);
+   BSP_LED_Init(LED_RED);
+
+//   BSP_LED_On(LED_GREEN);
 
 /* USER CODE END APPE_Init_1 */
   appe_Tl_Init();	/* Initialize all transport layers */

@@ -98,7 +98,7 @@ STM32_WPAN/App/dts.o: ../STM32_WPAN/App/dts.c \
  ../Middlewares/ST/STM32_WPAN/utilities/dbg_trace.h \
  ../STM32_WPAN/App/dts.h \
  D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/core/auto/ble_types.h \
- ../STM32_WPAN/App/ble_conf.h
+ ../STM32_WPAN/App/ble_conf.h ../Core/Inc/main.h ../Core/Inc/app_conf.h
 
 D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/ble_common.h:
 
@@ -305,3 +305,7 @@ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/svc/Inc/uuid.h:
 D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/core/auto/ble_types.h:
 
 ../STM32_WPAN/App/ble_conf.h:
+
+../Core/Inc/main.h:
+
+../Core/Inc/app_conf.h:

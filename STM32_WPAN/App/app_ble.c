@@ -36,7 +36,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "dis_app.h"
-#include "cmsis_os.h"
 #include "main.h"
 #include "ble_legacy.h"
 #include "ble_defs.h"
@@ -413,11 +412,11 @@ void APP_BLE_Init_Dyn_1( void )
   /* TODO: ERROR SOMEWHERE BELOW? */
 
 
-  /**
-   * Initialization of the BLE App Context
-   */
-  BleApplicationContext.Device_Connection_Status = APP_BLE_IDLE;
-  BleApplicationContext.BleApplicationContext_legacy.connectionHandle = 0xFFFF;
+//  /**
+//   * Initialization of the BLE App Context
+//   */
+//  BleApplicationContext.Device_Connection_Status = APP_BLE_IDLE;
+//  BleApplicationContext.BleApplicationContext_legacy.connectionHandle = 0xFFFF;
 
   //TODO: REPLACED
 //  /**
@@ -474,16 +473,24 @@ void APP_BLE_Init_Dyn_1( void )
   aci_gap_clear_security_db();
 
   /**
+     * Initialize Data Client (this shouldn''t ideally happen but some of ST's example code for server
+     * relies on functions within this function)
+     * todo: rip out what's needed and fold it into DTS_App_Init()
+     */
+
+  DTC_App_Init();
+
+  /**
    * Initialize Data Server (GATT SERVER)
    */
 
   DTS_App_Init();
 
-  //TODO: ripped from heartbeat. I think this sends the manufacturer information to the connecting device
-  /**
-   * Initialize DIS Application
-   */
-  DISAPP_Init();
+//  //TODO: ripped from heartbeat. I think this sends the manufacturer information to the connecting device
+//  /**
+//   * Initialize DIS Application
+//   */
+//  DISAPP_Init();
 
 
   /**
@@ -623,42 +630,54 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
           break;
         case EVT_LE_CONN_COMPLETE:
           {
-          hci_le_connection_complete_event_rp0 *connection_complete_event;
 
-          /**
-           * The connection is done, there is no need anymore to schedule the LP ADV
-           */
-          connection_complete_event = (hci_le_connection_complete_event_rp0 *) meta_evt->data;
-          
-          HW_TS_Stop(BleApplicationContext.Advertising_mgr_timer_Id);
+        	  mutex = 1;
+			   connection_update_complete = (hci_le_connection_update_complete_event_rp0*)meta_evt->data;
 
-            APP_DBG_MSG("EVT_LE_CONN_COMPLETE for connection handle 0x%x\n",
-                      connection_complete_event->Connection_Handle);
+			   APP_DBG_MSG("EVT_LE_CONN_UPDATE_COMPLETE \n");
+			   Connection_Interval = connection_update_complete->Conn_Interval * 1.25;
+			   APP_DBG_MSG("interval= %.2f ms \n",Connection_Interval);
+			   APP_DBG_MSG("latency= 0x%x \n",connection_update_complete->Conn_Latency);
+			   Supervision_Timeout = connection_update_complete->Supervision_Timeout * 10;
+			   APP_DBG_MSG("supervision_timeout= %.2f ms \n",Supervision_Timeout);
 
-            if (BleApplicationContext.Device_Connection_Status == APP_BLE_LP_CONNECTING)
-            {
-              /* Connection as client */
-              BleApplicationContext.Device_Connection_Status = APP_BLE_CONNECTED_CLIENT;
-            }
-            else
-            {
-              /* Connection as server */
-              BleApplicationContext.Device_Connection_Status = APP_BLE_CONNECTED_SERVER;
-            }
-            
-            BleApplicationContext.BleApplicationContext_legacy.connectionHandle =
-                connection_complete_event->Connection_Handle;
+			   //todo: removed below from example and replaced from BLE DT example
+//          hci_le_connection_complete_event_rp0 *connection_complete_event;
+//
+//          /**
+//           * The connection is done, there is no need anymore to schedule the LP ADV
+//           */
+//          connection_complete_event = (hci_le_connection_complete_event_rp0 *) meta_evt->data;
+//
+//          HW_TS_Stop(BleApplicationContext.Advertising_mgr_timer_Id);
+//
+//            APP_DBG_MSG("EVT_LE_CONN_COMPLETE for connection handle 0x%x\n",
+//                      connection_complete_event->Connection_Handle);
+//
+//            if (BleApplicationContext.Device_Connection_Status == APP_BLE_LP_CONNECTING)
+//            {
+//              /* Connection as client */
+//              BleApplicationContext.Device_Connection_Status = APP_BLE_CONNECTED_CLIENT;
+//            }
+//            else
+//            {
+//              /* Connection as server */
+//              BleApplicationContext.Device_Connection_Status = APP_BLE_CONNECTED_SERVER;
+//            }
+//
+//            BleApplicationContext.BleApplicationContext_legacy.connectionHandle =
+//                connection_complete_event->Connection_Handle;
 
             //todo: do we need the P2P APP calls still?
  /*
 * SPECIFIC to P2P Server APP
 */             
-          handleNotification.P2P_Evt_Opcode = PEER_CONN_HANDLE_EVT;
-          handleNotification.ConnectionHandle = BleApplicationContext.BleApplicationContext_legacy.connectionHandle;
-          P2PS_APP_Notification(&handleNotification);
+//          handleNotification.P2P_Evt_Opcode = PEER_CONN_HANDLE_EVT;
+//          handleNotification.ConnectionHandle = BleApplicationContext.BleApplicationContext_legacy.connectionHandle;
+//          P2PS_APP_Notification(&handleNotification);
           /* USER CODE BEGIN HCI_EVT_LE_CONN_COMPLETE */
 
-          osThreadFlagsSet( LinkConfigProcessId, 1 );
+//          osThreadFlagsSet( LinkConfigProcessId, 1 );
           /* USER CODE END HCI_EVT_LE_CONN_COMPLETE */
           }
         break; /* HCI_EVT_LE_CONN_COMPLETE */
@@ -1103,8 +1122,8 @@ static void Adv_Request(APP_BLE_ConnStatus_t New_Status)
         (uint8_t*) &local_name,
         BleApplicationContext.BleApplicationContext_legacy.advtServUUIDlen,
         BleApplicationContext.BleApplicationContext_legacy.advtServUUID,
-        0,
-        0);
+        6,
+        8);
 //    ret = aci_gap_set_discoverable(ADV_IND,
 //            FAST_CONN_ADV_INTERVAL_MIN,
 //            FAST_CONN_ADV_INTERVAL_MAX,
@@ -1380,11 +1399,13 @@ void LinkConfiguration(void * argument)
 #endif
 
 //  APP_DBG_MSG("set data length \n");
+//  BSP_LED_On(LED_BLUE);
   status = hci_le_set_data_length(BleApplicationContext.BleApplicationContext_legacy.connectionHandle,251,2120);
-//  if (status != BLE_STATUS_SUCCESS)
-//  {
+  if (status != BLE_STATUS_SUCCESS)
+  {
+//	  BSP_LED_On(LED_RED);
 //    APP_DBG_MSG("set data length command error \n");
-//  }
+  }
 
 #if ((CFG_ENCRYPTION_ENABLE != 0) && (CFG_BLE_CENTRAL != 0))
   GapProcReq(GAP_PROC_PAIRING);

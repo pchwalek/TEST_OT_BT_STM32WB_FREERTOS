@@ -280,15 +280,17 @@ typedef enum
 #define CFG_BLE_PERIPHERAL  1
 #endif
 
+
+//todo: REMOVE TRACES IN FINAL PROJECT
 /**
  * When set to 1, the traces are enabled in the BLE services
  */
-#define CFG_DEBUG_BLE_TRACE     0
+#define CFG_DEBUG_BLE_TRACE     1
 
 /**
  * Enable or Disable traces in application
  */
-#define CFG_DEBUG_APP_TRACE     0
+#define CFG_DEBUG_APP_TRACE     1
 
 #if (CFG_DEBUG_APP_TRACE != 0)
 #define APP_DBG_MSG                 PRINT_MESG_DBG
@@ -321,7 +323,7 @@ typedef enum
 /**
  * Define Advertising parameters
  */
-#define CFG_ADV_BD_ADDRESS                (0x7257acd87a6c)
+//#define CFG_ADV_BD_ADDRESS                (0x7257acd87a6c)
 #define CFG_FAST_CONN_ADV_INTERVAL_MIN    (0x80)   /**< 80ms */
 #define CFG_FAST_CONN_ADV_INTERVAL_MAX    (0xa0)  /**< 100ms */
 #define CFG_LP_CONN_ADV_INTERVAL_MIN      (0x640) /**< 1s */
@@ -365,7 +367,8 @@ typedef enum
 #define TX_2M                                           0x02
 #define RX_1M                                           0x01
 #define RX_2M                                           0x02
-
+#define RX_1M_PREFERRED                                 0x01
+#define TX_1M_PREFERRED                                 0x01
 
 /**
 *   Identity root key used to derive LTK and CSRK
@@ -404,6 +407,40 @@ typedef enum
  * SMPS used when Set to 1
  */
 #define CFG_USE_SMPS    1
+
+
+/**
+ * TX PHY configuration
+ * It shall be set to
+ * 0 if ignored
+ * 1 if 1M
+ * 2 if 2M
+ * 4 if LE_CODED
+ * or any combination of 1M | 2M | LE_CODED
+ */
+#define CFG_TX_PHY    1
+
+/**
+ * RX PHY configuration
+ * It shall be set to
+ * 0 if ignored
+ * 1 if 1M
+ * 2 if 2M
+ * 4 if LE_CODED
+ * or any combination of 1M | 2M | LE_CODED
+ */
+#define CFG_RX_PHY    1
+
+/**
+ * ALL PHYS configuration
+ */
+#define CFG_ALL_PHYS    ((!CFG_TX_PHY) + ((!CFG_RX_PHY)*2))
+
+#define UUID_128BIT_FORMAT                          1
+
+#define MAX_HCI_CMD_EVENT_PAYLOAD_SIZE 255
+
+#define SCAN_L (0x320)
 /* USER CODE END Generic_Parameters */
 
 /**< specific parameters */
@@ -450,6 +487,8 @@ typedef enum
 #define L2CAP_SLAVE_LATENCY             0x0000
 #define L2CAP_TIMEOUT_MULTIPLIER        0x1F4
 
+
+
 /******************************************************************************
  * BLE Stack
  ******************************************************************************/
@@ -457,7 +496,7 @@ typedef enum
  * Maximum number of simultaneous connections that the device will support.
  * Valid values are from 1 to 8
  */
-#define CFG_BLE_NUM_LINK            8
+#define CFG_BLE_NUM_LINK            2
 
 /**
  * Maximum number of Services that can be stored in the GATT database.
@@ -477,7 +516,7 @@ typedef enum
 /**
  * Maximum supported ATT_MTU size
  */
-#define CFG_BLE_MAX_ATT_MTU             (156)
+#define CFG_BLE_MAX_ATT_MTU             (251)
 
 /**
  * Size of the storage area for Attribute values
@@ -587,71 +626,71 @@ typedef enum
  */
 
 /**< Add in that list all tasks that may send a ACI/HCI command */
-typedef enum
-{
-  /* BLE */
-  CFG_TASK_ADV_CANCEL_ID,
-  CFG_TASK_SW1_BUTTON_PUSHED_ID,
-  CFG_TASK_HCI_ASYNCH_EVT_ID,
-
-  /* Thread */
-  CFG_TASK_COAP_MSG_BUTTON,
-  CFG_TASK_MSG_FROM_M0_TO_M4,
-  CFG_TASK_SEND_CLI_TO_M0,
-  CFG_TASK_COAP_SEND_MSG,
-  CFG_TASK_SET_THREAD_MODE,
-
-  /* Concurrent System */
-  CFG_Task_Switch_Protocol,
-
-  CFG_LAST_TASK_ID_WITH_HCICMD, /**< Shall be LAST in the list */
-
-
-} CFG_Task_Id_With_HCI_Cmd_t;
-
-/**< Add in that list all tasks that never send a ACI/HCI command */
-typedef enum
-{
-    CFG_FIRST_TASK_ID_WITH_NO_HCICMD = CFG_LAST_TASK_ID_WITH_HCICMD - 1,        /**< Shall be FIRST in the list */
-
-    CFG_TASK_SYSTEM_HCI_ASYNCH_EVT_ID,
-/* USER CODE BEGIN CFG_Task_Id_With_NO_HCI_Cmd_t */
-
-/* USER CODE END CFG_Task_Id_With_NO_HCI_Cmd_t */
-    CFG_LAST_TASK_ID_WITHO_NO_HCICMD                                            /**< Shall be LAST in the list */
-} CFG_Task_Id_With_NO_HCI_Cmd_t;
-#define CFG_TASK_NBR    CFG_LAST_TASK_ID_WITHO_NO_HCICMD
-
-/**
- * This is the list of priority required by the application
- * Each Id shall be in the range 0..31
- */
-typedef enum
-{
-  CFG_SCH_PRIO_0,
-  CFG_SCH_PRIO_1,
-  CFG_PRIO_NBR,
-} CFG_SCH_Prio_Id_t;
-
-#define TASK_COAP_MSG_BUTTON        (1U << CFG_TASK_COAP_MSG_BUTTON)
-#define TASK_MSG_FROM_M0_TO_M4      (1U << CFG_TASK_MSG_FROM_M0_TO_M4)
-#define TASK_COAP_SEND_MSG          (1U << CFG_TASK_COAP_SEND_MSG)
-#define TASK_SET_THREAD_MODE        (1U << CFG_TASK_SET_THREAD_MODE)
-/**
- * This is a bit mapping over 32bits listing all events id supported in the application
- */
-typedef enum
-{
-  CFG_IDLEEVT_HCI_CMD_EVT_RSP_ID,
-  CFG_IDLEEVT_SYSTEM_HCI_CMD_EVT_RSP_ID,
-  /* THREAD */
-  CFG_EVT_ACK_FROM_M0_EVT,
-  CFG_EVT_SYNCHRO_BYPASS_IDLE,
-  CFG_Evt_ThreadStop,
-
-  CFG_IDLEEVT_GAP_PROC_COMPLETE,
-  CFG_IDLEEVT_GATT_PROC_COMPLETE,
-} CFG_IdleEvt_Id_t;
+//typedef enum
+//{
+//  /* BLE */
+//  CFG_TASK_ADV_CANCEL_ID,
+//  CFG_TASK_SW1_BUTTON_PUSHED_ID,
+//  CFG_TASK_HCI_ASYNCH_EVT_ID,
+//
+//  /* Thread */
+//  CFG_TASK_COAP_MSG_BUTTON,
+//  CFG_TASK_MSG_FROM_M0_TO_M4,
+//  CFG_TASK_SEND_CLI_TO_M0,
+//  CFG_TASK_COAP_SEND_MSG,
+//  CFG_TASK_SET_THREAD_MODE,
+//
+//  /* Concurrent System */
+//  CFG_Task_Switch_Protocol,
+//
+//  CFG_LAST_TASK_ID_WITH_HCICMD, /**< Shall be LAST in the list */
+//
+//
+//} CFG_Task_Id_With_HCI_Cmd_t;
+//
+///**< Add in that list all tasks that never send a ACI/HCI command */
+//typedef enum
+//{
+//    CFG_FIRST_TASK_ID_WITH_NO_HCICMD = CFG_LAST_TASK_ID_WITH_HCICMD - 1,        /**< Shall be FIRST in the list */
+//
+//    CFG_TASK_SYSTEM_HCI_ASYNCH_EVT_ID,
+///* USER CODE BEGIN CFG_Task_Id_With_NO_HCI_Cmd_t */
+//
+///* USER CODE END CFG_Task_Id_With_NO_HCI_Cmd_t */
+//    CFG_LAST_TASK_ID_WITHO_NO_HCICMD                                            /**< Shall be LAST in the list */
+//} CFG_Task_Id_With_NO_HCI_Cmd_t;
+//#define CFG_TASK_NBR    CFG_LAST_TASK_ID_WITHO_NO_HCICMD
+//
+///**
+// * This is the list of priority required by the application
+// * Each Id shall be in the range 0..31
+// */
+//typedef enum
+//{
+//  CFG_SCH_PRIO_0,
+//  CFG_SCH_PRIO_1,
+//  CFG_PRIO_NBR,
+//} CFG_SCH_Prio_Id_t;
+//
+//#define TASK_COAP_MSG_BUTTON        (1U << CFG_TASK_COAP_MSG_BUTTON)
+//#define TASK_MSG_FROM_M0_TO_M4      (1U << CFG_TASK_MSG_FROM_M0_TO_M4)
+//#define TASK_COAP_SEND_MSG          (1U << CFG_TASK_COAP_SEND_MSG)
+//#define TASK_SET_THREAD_MODE        (1U << CFG_TASK_SET_THREAD_MODE)
+///**
+// * This is a bit mapping over 32bits listing all events id supported in the application
+// */
+//typedef enum
+//{
+//  CFG_IDLEEVT_HCI_CMD_EVT_RSP_ID,
+//  CFG_IDLEEVT_SYSTEM_HCI_CMD_EVT_RSP_ID,
+//  /* THREAD */
+//  CFG_EVT_ACK_FROM_M0_EVT,
+//  CFG_EVT_SYNCHRO_BYPASS_IDLE,
+//  CFG_Evt_ThreadStop,
+//
+//  CFG_IDLEEVT_GAP_PROC_COMPLETE,
+//  CFG_IDLEEVT_GATT_PROC_COMPLETE,
+//} CFG_IdleEvt_Id_t;
 
 
 #define EVENT_ACK_FROM_M0_EVT            (1U << CFG_EVT_ACK_FROM_M0_EVT)

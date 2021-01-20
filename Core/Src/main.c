@@ -50,7 +50,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+GPIO_TypeDef* GPIO_PORT[LEDn] = {LED1_GPIO_PORT, LED2_GPIO_PORT, LED3_GPIO_PORT};
+const uint16_t GPIO_PIN[LEDn] = {LED1_PIN, LED2_PIN, LED3_PIN};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -189,7 +190,51 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void BSP_LED_Init(Led_TypeDef Led)
+{
+  GPIO_InitTypeDef  gpioinitstruct = {0};
 
+  /* Enable the GPIO_LED Clock */
+  LEDx_GPIO_CLK_ENABLE(Led);
+
+  /* Configure the GPIO_LED pin */
+  gpioinitstruct.Pin = GPIO_PIN[Led];
+  gpioinitstruct.Mode = GPIO_MODE_OUTPUT_PP;
+  gpioinitstruct.Pull = GPIO_NOPULL;
+  gpioinitstruct.Speed = GPIO_SPEED_FREQ_HIGH;
+
+  HAL_GPIO_Init(GPIO_PORT[Led], &gpioinitstruct);
+
+  HAL_GPIO_WritePin(GPIO_PORT[Led], GPIO_PIN[Led], GPIO_PIN_RESET);
+}
+
+/**
+  * @brief  Turns selected LED On.
+  * @param  Led: Specifies the Led to be set on.
+  *   This parameter can be one of following parameters:
+  *     @arg LED1
+  *     @arg LED2
+  *     @arg LED3
+  * @retval None
+  */
+void BSP_LED_On(Led_TypeDef Led)
+{
+  HAL_GPIO_WritePin(GPIO_PORT[Led], GPIO_PIN[Led], GPIO_PIN_SET);
+}
+
+/**
+  * @brief  Turns selected LED Off.
+  * @param  Led: Specifies the Led to be set off.
+  *   This parameter can be one of following parameters:
+  *     @arg LED1
+  *     @arg LED2
+  *     @arg LED3
+  * @retval None
+  */
+void BSP_LED_Off(Led_TypeDef Led)
+{
+  HAL_GPIO_WritePin(GPIO_PORT[Led], GPIO_PIN[Led], GPIO_PIN_RESET);
+}
 /* USER CODE END 4 */
 
  /**

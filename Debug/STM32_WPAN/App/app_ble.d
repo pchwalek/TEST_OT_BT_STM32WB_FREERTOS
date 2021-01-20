@@ -100,12 +100,6 @@ STM32_WPAN/App/app_ble.o: ../STM32_WPAN/App/app_ble.c \
  ../STM32_WPAN/App/app_ble.h \
  D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/hci_tl.h \
  D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h \
- D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h \
- D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h \
- ../Utilities/lpm/tiny_lpm/stm32_lpm.h \
- ../Middlewares/ST/STM32_WPAN/utilities/otp.h \
- ../Middlewares/ST/STM32_WPAN/utilities/utilities_common.h \
- ../STM32_WPAN/App/p2p_server_app.h ../STM32_WPAN/App/dis_app.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
@@ -117,6 +111,12 @@ STM32_WPAN/App/app_ble.o: ../STM32_WPAN/App/app_ble.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h \
+ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h \
+ ../Utilities/lpm/tiny_lpm/stm32_lpm.h \
+ ../Middlewares/ST/STM32_WPAN/utilities/otp.h \
+ ../Middlewares/ST/STM32_WPAN/utilities/utilities_common.h \
+ ../STM32_WPAN/App/p2p_server_app.h ../STM32_WPAN/App/dis_app.h \
  ../Core/Inc/main.h \
  D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/ble/core/ble_legacy.h \
  ../STM32_WPAN/App/dt_client_app.h ../STM32_WPAN/App/dt_server_app.h \
@@ -334,20 +334,6 @@ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/
 
 D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/tl.h:
 
-D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h:
-
-D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h:
-
-../Utilities/lpm/tiny_lpm/stm32_lpm.h:
-
-../Middlewares/ST/STM32_WPAN/utilities/otp.h:
-
-../Middlewares/ST/STM32_WPAN/utilities/utilities_common.h:
-
-../STM32_WPAN/App/p2p_server_app.h:
-
-../STM32_WPAN/App/dis_app.h:
-
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
@@ -369,6 +355,20 @@ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/
 ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
 
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
+
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/shci/shci.h:
+
+D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/tl/mbox_def.h:
+
+../Utilities/lpm/tiny_lpm/stm32_lpm.h:
+
+../Middlewares/ST/STM32_WPAN/utilities/otp.h:
+
+../Middlewares/ST/STM32_WPAN/utilities/utilities_common.h:
+
+../STM32_WPAN/App/p2p_server_app.h:
+
+../STM32_WPAN/App/dis_app.h:
 
 ../Core/Inc/main.h:
 

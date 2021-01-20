@@ -33,6 +33,8 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "app_conf.h"
+#include "cmsis_os.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -189,6 +191,7 @@ extern "C" {
 /* External variables --------------------------------------------------------*/
 /* USER CODE BEGIN EV */
 extern PLACE_IN_SECTION("BLE_APP_CONTEXT") BleApplicationContext_t BleApplicationContext;
+extern osThreadId_t LinkConfigProcessId;
 
 /* USER CODE END EV */
 

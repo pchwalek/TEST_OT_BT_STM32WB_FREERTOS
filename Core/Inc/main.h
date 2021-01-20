@@ -43,7 +43,16 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+typedef enum
+{
+  LED1 = 0,
+  LED2 = 1,
+  LED3 = 2,
+  /* Color led aliases */
+  LED_BLUE   = LED1,
+  LED_GREEN  = LED2,
+  LED_RED    = LED3
+}Led_TypeDef;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -55,12 +64,35 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void BSP_LED_Init(Led_TypeDef Led);
+void BSP_LED_On(Led_TypeDef Led);
+void BSP_LED_Off(Led_TypeDef Led);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
+/** @defgroup STM32WBXX_NUCLEO_LED LED Constants
+  * @{
+  */
+#define LEDn                                    3
 
+#define LED1_PIN                                GPIO_PIN_5
+#define LED1_GPIO_PORT                          GPIOB
+#define LED1_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOB_CLK_ENABLE()
+#define LED1_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOB_CLK_DISABLE()
+
+#define LED2_PIN                                GPIO_PIN_0
+#define LED2_GPIO_PORT                          GPIOB
+#define LED2_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOB_CLK_ENABLE()
+#define LED2_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOB_CLK_DISABLE()
+
+#define LED3_PIN                                GPIO_PIN_1
+#define LED3_GPIO_PORT                          GPIOB
+#define LED3_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOB_CLK_ENABLE()
+#define LED3_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOB_CLK_DISABLE()
+
+#define LEDx_GPIO_CLK_ENABLE(__INDEX__)         __HAL_RCC_GPIOB_CLK_ENABLE() /* All Led on same port */
+#define LEDx_GPIO_CLK_DISABLE(__INDEX__)        __HAL_RCC_GPIOB_CLK_DISABLE() /* All Led on same port */
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

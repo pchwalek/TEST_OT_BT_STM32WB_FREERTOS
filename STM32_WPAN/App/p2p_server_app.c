@@ -363,7 +363,7 @@ void P2PS_APP_LED_BUTTON_context_Init(void){
 
 void P2PS_APP_SW1_Button_Action(void)
 {
-  UTIL_SEQ_SetTask( 1<<CFG_TASK_SW1_BUTTON_PUSHED_ID, CFG_SCH_PRIO_0);
+//  UTIL_SEQ_SetTask( 1<<CFG_TASK_SW1_BUTTON_PUSHED_ID, CFG_SCH_PRIO_0);
 
   return;
 }

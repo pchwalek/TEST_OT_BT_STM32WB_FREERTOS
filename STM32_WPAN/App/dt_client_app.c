@@ -29,6 +29,10 @@
 #include "dt_client_app.h"
 #include "dts.h"
 
+#include "cmsis_os.h"
+
+#include "main.h"
+
 //#include "stm32_seq.h"
 
 /* Private defines -----------------------------------------------------------*/
@@ -193,7 +197,7 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
           uint16_t uuid, handle;
 
           handle = pr->Connection_Handle;
-
+          BSP_LED_On(LED_BLUE);
           APP_DBG_MSG("DTC_Event_Handler: EVT_BLUE_ATT_READ_BY_GROUP_TYPE_RESP\n");
 
           DataTransferClientContext.connHandle = handle;
@@ -230,6 +234,7 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
                   DataTransferClientContext.DataTransferServiceEndHandle =
                       UNPACK_2_BYTE_PARAMETER(&pr->Attribute_Data_List[idx - 2]);
 #endif
+                  BSP_LED_On(LED_GREEN);
                   APP_DBG_MSG("DTC_Event_Handler: DATA_TRANSFER_SERVICE_UUID found !\n");
                 }
                 idx += 6;
@@ -356,7 +361,9 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
         break;/* end EVT_BLUE_GATT_NOTIFICATION */
 
         case EVT_BLUE_GATT_PROCEDURE_COMPLETE:
-          UTIL_SEQ_SetEvt(1 << CFG_IDLEEVT_GATT_PROC_COMPLETE);
+//          UTIL_SEQ_SetEvt(1 << CFG_IDLEEVT_GATT_PROC_COMPLETE);
+//        	BSP_LED_On(LED_GREEN);
+          osThreadFlagsSet( LinkConfigProcessId, 2 );
           break; /*EVT_BLUE_GATT_PROCEDURE_COMPLETE*/
 
         default:
@@ -414,27 +421,33 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
     {
       case GATT_PROC_MTU_UPDATE:
         APP_DBG_MSG("change ATT MTU size \n");
-
+//        BSP_LED_On(LED_BLUE);
         status = aci_gatt_exchange_config(DataTransferClientContext.connHandle);
         if (status != BLE_STATUS_SUCCESS)
         {
           APP_DBG_MSG("change MTU cmd failure: 0x%x\n", status);
+//          BSP_LED_On(LED_RED);
+
         }
 //        UTIL_SEQ_WaitEvt(1 << CFG_IDLEEVT_GATT_PROC_COMPLETE);
-
+        osThreadFlagsWait( 2, osFlagsWaitAny, osWaitForever);
+//        BSP_LED_Off(LED_BLUE);
         APP_DBG_MSG("GATT_PROC_MTU_UPDATE complete event received \n");
         break;
 
       case GATT_PROC_DISC_ALL_PRIMARY_SERVICES:
+//    	  BSP_LED_On(LED_BLUE);
         APP_DBG_MSG("Discover all primary services \n");
 
         status = aci_gatt_disc_all_primary_services(DataTransferClientContext.connHandle);
         if (status != BLE_STATUS_SUCCESS)
         {
           APP_DBG_MSG("Discover all primary services cmd failure: 0x%x\n", status);
+//          BSP_LED_On(LED_RED);
         }
 //        UTIL_SEQ_WaitEvt(1 << CFG_IDLEEVT_GATT_PROC_COMPLETE);
-
+        osThreadFlagsWait( 2, osFlagsWaitAny, osWaitForever);
+//        BSP_LED_On(LED_GREEN);
         APP_DBG_MSG("GATT_PROC_DISC_ALL_PRIMARY_SERVICES complete event received \n");
         break;
 
@@ -448,8 +461,10 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
         if (status != BLE_STATUS_SUCCESS)
         {
           APP_DBG_MSG("Discover all char of service cmd failure: 0x%x\n", status);
+//          BSP_LED_On(LED_RED);
         }
 //        UTIL_SEQ_WaitEvt(1 << CFG_IDLEEVT_GATT_PROC_COMPLETE);
+        osThreadFlagsWait( 2, osFlagsWaitAny, osWaitForever);
 
         APP_DBG_MSG("GATT_PROC_DISC_ALL_CHAR_OF_DT_SERVICE complete event received \n");
         break;
@@ -464,8 +479,10 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
         if (status != BLE_STATUS_SUCCESS)
         {
           APP_DBG_MSG("Discover Tx char descriptors cmd failure: 0x%x\n", status);
+//          BSP_LED_On(LED_RED);
         }
 //        UTIL_SEQ_WaitEvt(1 << CFG_IDLEEVT_GATT_PROC_COMPLETE);
+        osThreadFlagsWait( 2, osFlagsWaitAny, osWaitForever);
 
         APP_DBG_MSG("GATT_PROC_DISC_TX_CHAR_DESC complete event received \n");
         break;

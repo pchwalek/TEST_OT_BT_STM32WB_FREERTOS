@@ -24,6 +24,8 @@
 #include "dbg_trace.h"
 #include "dts.h"   
 
+#include "main.h"
+
 #define UUID_128_SUPPORTED 1
 
 #if (UUID_128_SUPPORTED == 1)
@@ -129,10 +131,13 @@ static SVCCTL_EvtAckStatus_t DTS_Event_Handler( void *Event )
       switch (blue_evt->ecode)
       {
         case EVT_BLUE_ATT_EXCHANGE_MTU_RESP:
-          APP_DBG_MSG("EVT_BLUE_ATT_EXCHANGE_MTU_RESP \n");					
+//        	 BSP_LED_On(LED_BLUE);
+          APP_DBG_MSG("EVT_BLUE_ATT_EXCHANGE_MTU_RESP \n");
           exchange_mtu_resp = (aci_att_exchange_mtu_resp_event_rp0 *)blue_evt->data;
           APP_DBG_MSG("MTU_size = %d \n",exchange_mtu_resp->Server_RX_MTU );
           Att_Mtu_Exchanged = exchange_mtu_resp->Server_RX_MTU;
+//     	 BSP_LED_On(LED_GREEN);
+
           break;
         /* server */
         case EVT_BLUE_GATT_ATTRIBUTE_MODIFIED:
@@ -254,6 +259,7 @@ void DTS_STM_Init( void )
   if (hciCmdResult != 0)
   {
     APP_DBG_MSG("error add service 0x%x\n", hciCmdResult);
+    BSP_LED_On(LED_RED);
   }
 
   /**
@@ -272,6 +278,7 @@ void DTS_STM_Init( void )
   if (hciCmdResult != 0)
   {
     APP_DBG_MSG("error add char Tx 0x%x\n", hciCmdResult);
+    BSP_LED_On(LED_RED);
   }
 
   /**
@@ -290,6 +297,7 @@ void DTS_STM_Init( void )
   if (hciCmdResult != 0)
   {
     APP_DBG_MSG("error add char Tx\n");
+    BSP_LED_On(LED_RED);
   }
   
   /**
@@ -308,6 +316,7 @@ void DTS_STM_Init( void )
   if (hciCmdResult != 0)
   {
     APP_DBG_MSG("error add char Tx\n");
+    BSP_LED_On(LED_RED);
   }
   
   return;
