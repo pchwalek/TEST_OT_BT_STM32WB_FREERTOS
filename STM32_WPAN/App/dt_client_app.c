@@ -197,7 +197,7 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
           uint16_t uuid, handle;
 
           handle = pr->Connection_Handle;
-          BSP_LED_On(LED_BLUE);
+//          BSP_LED_On(LED_BLUE);
           APP_DBG_MSG("DTC_Event_Handler: EVT_BLUE_ATT_READ_BY_GROUP_TYPE_RESP\n");
 
           DataTransferClientContext.connHandle = handle;
@@ -234,7 +234,7 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
                   DataTransferClientContext.DataTransferServiceEndHandle =
                       UNPACK_2_BYTE_PARAMETER(&pr->Attribute_Data_List[idx - 2]);
 #endif
-                  BSP_LED_On(LED_GREEN);
+//                  BSP_LED_On(LED_GREEN);
                   APP_DBG_MSG("DTC_Event_Handler: DATA_TRANSFER_SERVICE_UUID found !\n");
                 }
                 idx += 6;
@@ -362,7 +362,7 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
 
         case EVT_BLUE_GATT_PROCEDURE_COMPLETE:
 //          UTIL_SEQ_SetEvt(1 << CFG_IDLEEVT_GATT_PROC_COMPLETE);
-//        	BSP_LED_On(LED_GREEN);
+//        	BSP_LED_On(LED_RED);
           osThreadFlagsSet( LinkConfigProcessId, 2 );
           break; /*EVT_BLUE_GATT_PROCEDURE_COMPLETE*/
 
@@ -421,17 +421,17 @@ static SVCCTL_EvtAckStatus_t DTC_Event_Handler( void *Event )
     {
       case GATT_PROC_MTU_UPDATE:
         APP_DBG_MSG("change ATT MTU size \n");
-//        BSP_LED_On(LED_BLUE);
         status = aci_gatt_exchange_config(DataTransferClientContext.connHandle);
         if (status != BLE_STATUS_SUCCESS)
         {
           APP_DBG_MSG("change MTU cmd failure: 0x%x\n", status);
-//          BSP_LED_On(LED_RED);
+          BSP_LED_On(LED_RED);
 
         }
+        BSP_LED_On(LED_GREEN);
 //        UTIL_SEQ_WaitEvt(1 << CFG_IDLEEVT_GATT_PROC_COMPLETE);
         osThreadFlagsWait( 2, osFlagsWaitAny, osWaitForever);
-//        BSP_LED_Off(LED_BLUE);
+        BSP_LED_Off(LED_GREEN);
         APP_DBG_MSG("GATT_PROC_MTU_UPDATE complete event received \n");
         break;
 

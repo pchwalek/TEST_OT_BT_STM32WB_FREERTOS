@@ -131,12 +131,12 @@ static SVCCTL_EvtAckStatus_t DTS_Event_Handler( void *Event )
       switch (blue_evt->ecode)
       {
         case EVT_BLUE_ATT_EXCHANGE_MTU_RESP:
-//        	 BSP_LED_On(LED_BLUE);
+        	 BSP_LED_On(LED_BLUE);
           APP_DBG_MSG("EVT_BLUE_ATT_EXCHANGE_MTU_RESP \n");
           exchange_mtu_resp = (aci_att_exchange_mtu_resp_event_rp0 *)blue_evt->data;
           APP_DBG_MSG("MTU_size = %d \n",exchange_mtu_resp->Server_RX_MTU );
           Att_Mtu_Exchanged = exchange_mtu_resp->Server_RX_MTU;
-//     	 BSP_LED_On(LED_GREEN);
+     	 BSP_LED_On(LED_GREEN);
 
           break;
         /* server */

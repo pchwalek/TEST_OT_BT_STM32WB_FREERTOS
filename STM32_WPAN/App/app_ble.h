@@ -177,7 +177,7 @@ extern "C" {
        */
        uint8_t Advertising_mgr_timer_Id;
 
-      uint8_t SwitchOffGPIO_timer_Id;
+//      uint8_t SwitchOffGPIO_timer_Id;
 
       uint8_t DeviceServerFound;
     }BleApplicationContext_t;

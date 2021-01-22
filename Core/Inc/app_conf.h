@@ -26,6 +26,7 @@
 #include "hw_conf.h"
 #include "hw_if.h"
 
+
 /******************************************************************************
  * Application Config
  ******************************************************************************/
@@ -266,7 +267,7 @@ typedef enum
  */
 #define CFG_BLE_CENTRAL     0
 
-#define CFG_SERVER_ONLY     0
+#define CFG_SERVER_ONLY     1
 /**
  * in this specific application, the device is either central
  * or peripheral but cannot be both
@@ -347,7 +348,7 @@ typedef enum
 #define CFG_IO_CAPABILITY_NO_INPUT_NO_OUTPUT (0x03)
 #define CFG_IO_CAPABILITY_KEYBOARD_DISPLAY   (0x04)
 
-#define CFG_IO_CAPABILITY                     CFG_IO_CAPABILITY_DISPLAY_ONLY
+#define CFG_IO_CAPABILITY                     CFG_IO_CAPABILITY_DISPLAY_YES_NO
 
 /**
  * Define MITM modes
