@@ -177,7 +177,7 @@ extern "C" {
        */
        uint8_t Advertising_mgr_timer_Id;
 
-//      uint8_t SwitchOffGPIO_timer_Id;
+      uint8_t SwitchOffGPIO_timer_Id;
 
       uint8_t DeviceServerFound;
     }BleApplicationContext_t;
@@ -210,6 +210,8 @@ extern osThreadId_t LinkConfigProcessId;
   APP_BLE_ConnStatus_t APP_BLE_Get_Server_Connection_Status(void);
 
 /* USER CODE BEGIN EF */
+  void BLE_SVC_L2CAP_Conn_Update_7_5(void);
+
 void APP_BLE_Key_Button1_Action(void);
 void APP_BLE_Key_Button2_Action(void);
 void APP_BLE_Key_Button3_Action(void);

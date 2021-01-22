@@ -66,7 +66,11 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/dma.h ../Core/Inc/main.h ../Core/Inc/usart.h \
  ../Core/Inc/rf.h ../Core/Inc/rtc.h ../Core/Inc/app_entry.h \
  ../Core/Inc/app_common.h ../Core/Inc/gpio.h \
- D:/dev/TEST_BLE_OT_CONC/Utilities/sequencer/stm32_seq.h
+ D:/dev/TEST_BLE_OT_CONC/Utilities/sequencer/stm32_seq.h \
+ ../Middlewares/ST/STM32_WPAN/utilities/otp.h \
+ ../Middlewares/ST/STM32_WPAN/utilities/utilities_common.h \
+ ../Core/Inc/app_conf.h ../Utilities/lpm/tiny_lpm/stm32_lpm.h \
+ ../Middlewares/ST/STM32_WPAN/utilities/dbg_trace.h ../Core/Inc/hw_conf.h
 
 ../Core/Inc/main.h:
 
@@ -219,3 +223,15 @@ D:/dev/TEST_BLE_OT_CONC/Middlewares/ST/STM32_WPAN/interface/patterns/ble_thread/
 ../Core/Inc/gpio.h:
 
 D:/dev/TEST_BLE_OT_CONC/Utilities/sequencer/stm32_seq.h:
+
+../Middlewares/ST/STM32_WPAN/utilities/otp.h:
+
+../Middlewares/ST/STM32_WPAN/utilities/utilities_common.h:
+
+../Core/Inc/app_conf.h:
+
+../Utilities/lpm/tiny_lpm/stm32_lpm.h:
+
+../Middlewares/ST/STM32_WPAN/utilities/dbg_trace.h:
+
+../Core/Inc/hw_conf.h:

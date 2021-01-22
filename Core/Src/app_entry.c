@@ -363,12 +363,12 @@ static void APPE_SysEvtReadyProcessing( void )
   APP_DBG("1- Initialisation of BLE Stack...");
   APP_BLE_Init_Dyn_1();
   APP_DBG("2- Initialisation of OpenThread Stack. FW info :");
-//  APP_THREAD_Init_Dyn_1();
+  APP_THREAD_Init_Dyn_1();
 
   APP_DBG("3- Start BLE ADV...");
   APP_BLE_Init_Dyn_2();
   APP_DBG("4- Configure OpenThread (Channel, PANID, IPv6 stack, ...) and Start it...");
-//  APP_THREAD_Init_Dyn_2();
+  APP_THREAD_Init_Dyn_2();
 
 #if ( CFG_LPM_SUPPORTED == 1)
   /* Thread stack is initialized, low power mode can be enabled */

@@ -220,8 +220,8 @@ void DTS_Notification( DTS_STM_App_Notification_evt_t *pNotification )
       break;
       
     case DTC_NOTIFICATION_ENABLED:
-//      BLE_SVC_L2CAP_Conn_Update_7_5();
-      BLE_SVC_L2CAP_Conn_Update(BleApplicationContext.BleApplicationContext_legacy.connectionHandle);
+      BLE_SVC_L2CAP_Conn_Update_7_5();
+//      BLE_SVC_L2CAP_Conn_Update(BleApplicationContext.BleApplicationContext_legacy.connectionHandle);
 
       //DataTransferServerContext.NotificationClientTransferFlag = 0x01;
       break;

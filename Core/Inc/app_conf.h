@@ -407,7 +407,7 @@ typedef enum
  * SMPS not used when Set to 0
  * SMPS used when Set to 1
  */
-#define CFG_USE_SMPS    1
+#define CFG_USE_SMPS    0
 
 
 /**

@@ -71,7 +71,7 @@ typedef enum
 /* Private defines -----------------------------------------------------------*/
 #define APPBLE_GAP_DEVICE_NAME_LENGTH 7
 #define FAST_ADV_TIMEOUT               (30*1000*1000/CFG_TS_TICK_VAL) /**< 30s */
-#define INITIAL_ADV_TIMEOUT            (60*1000*1000/CFG_TS_TICK_VAL) /**< 60s */
+#define INITIAL_ADV_TIMEOUT            (120*1000*1000/CFG_TS_TICK_VAL) /**< 120s */
 
 #define BD_ADDR_SIZE_LOCAL    6
 
@@ -593,12 +593,12 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
 //		Adv_Request(APP_BLE_LP_ADV);
 #endif
 		//       Adv_Request(APP_BLE_FAST_ADV);
-		/*
-		 * SPECIFIC to P2P Server APP
-		 */
-		handleNotification.P2P_Evt_Opcode = PEER_DISCON_HANDLE_EVT;
-		handleNotification.ConnectionHandle = BleApplicationContext.BleApplicationContext_legacy.connectionHandle;
-		P2PS_APP_Notification(&handleNotification);
+//		/*
+//		 * SPECIFIC to P2P Server APP
+//		 */
+//		handleNotification.P2P_Evt_Opcode = PEER_DISCON_HANDLE_EVT;
+//		handleNotification.ConnectionHandle = BleApplicationContext.BleApplicationContext_legacy.connectionHandle;
+//		P2PS_APP_Notification(&handleNotification);
 
 		/* USER CODE BEGIN EVT_DISCONN_COMPLETE */
 
@@ -628,6 +628,9 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_App_Notification( void *pckt )
 			{
 				APP_DBG_MSG("EVT_UPDATE_PHY_COMPLETE, failure %d \n", evt_le_phy_update_complete->Status);
 			}
+
+			//todo: this is for central only so can delete
+//	          UTIL_SEQ_SetEvt(1 << CFG_IDLEEVT_GAP_PROC_COMPLETE);
 
 			break;
 		case EVT_LE_CONN_UPDATE_COMPLETE:
@@ -943,7 +946,7 @@ static void Ble_Tl_Init( void )
 static void Ble_Hci_Gap_Gatt_Init(void){
 
 	uint8_t role;
-	uint8_t index;
+//	uint8_t index;
 	uint16_t gap_service_handle, gap_dev_name_char_handle, gap_appearance_char_handle;
 	const uint8_t *bd_addr;
 	uint32_t srd_bd_addr[2];
@@ -1661,6 +1664,41 @@ void SVCCTL_ResumeUserEventFlow( void )
 void SVCCTL_InitCustomSvc( void )
 {
 	DTS_STM_Init();
+}
+
+void BLE_SVC_L2CAP_Conn_Update_7_5(void)
+{
+/* USER CODE BEGIN BLE_SVC_L2CAP_Conn_Update_1 */
+
+/* USER CODE END BLE_SVC_L2CAP_Conn_Update_1 */
+  if(mutex == 1) {
+    mutex = 0;
+    uint16_t interval_min = CONN_P(7.5);
+    uint16_t interval_max = CONN_P(7.5);
+    uint16_t slave_latency = L2CAP_SLAVE_LATENCY;
+    uint16_t timeout_multiplier = L2CAP_TIMEOUT_MULTIPLIER;
+    tBleStatus result;
+
+    result = aci_l2cap_connection_parameter_update_req(BleApplicationContext.BleApplicationContext_legacy.connectionHandle,
+                                                       interval_min, interval_max,
+                                                       slave_latency, timeout_multiplier);
+    if( result == BLE_STATUS_SUCCESS )
+    {
+#if(CFG_DEBUG_APP_TRACE != 0)
+      APP_DBG_MSG("BLE_SVC_L2CAP_Conn_Update(), Successfully \r\n\r");
+#endif
+    }
+    else
+    {
+#if(CFG_DEBUG_APP_TRACE != 0)
+      APP_DBG_MSG("BLE_SVC_L2CAP_Conn_Update(), Failed \r\n\r");
+#endif
+    }
+  }
+/* USER CODE BEGIN BLE_SVC_L2CAP_Conn_Update_2 */
+
+/* USER CODE END BLE_SVC_L2CAP_Conn_Update_2 */
+  return;
 }
 /* USER CODE END FD_WRAP_FUNCTIONS */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
