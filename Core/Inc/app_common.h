@@ -110,6 +110,81 @@ extern "C"{
 #define ALIGN(n)             __attribute__((aligned(n)))
 #endif
 
+struct blinkData{
+	uint8_t			data[100];
+	uint32_t		tick_ms;
+	uint32_t		payload_ID;
+};
+
+struct thermopileData{
+	uint16_t thermopile;
+	uint16_t thermistor;
+	uint32_t tick_ms;
+};
+
+struct thermopilePackagedData{
+	struct thermopileData temple[5];
+	struct thermopileData nose[5];
+};
+
+struct parsedSecondaryProcessorPacket{
+	struct thermopileData temple;
+	struct thermopileData nose;
+//	struct rotationData rotationMatrix;
+//	struct inertialInferenceData inferenceInfo;
+	uint32_t tick_ms;
+	uint32_t epoch;
+};
+
+struct rotationData{
+	float quatI;
+	float quatJ;
+	float quatK;
+	float quatReal;
+	float quatRadianAccuracy;
+	uint32_t tick_ms;
+};
+
+struct activityData{
+	uint8_t activityConfidence[9];
+	uint32_t tick_ms;
+};
+
+struct stabilityData{
+	uint8_t stabilityClass;
+	uint32_t tick_ms;
+};
+
+struct stepData{
+	uint16_t stepCount;
+	uint32_t tick_ms;
+};
+
+struct inertialData{
+	struct rotationData rotationMatrix;
+	struct activityData activity;
+//	struct stabilityData stability;
+//	struct stepData	step;
+
+};
+
+typedef struct VIVEVars{
+	float pos[3];
+	float pos_delta;
+	uint32_t time_ms;
+	uint32_t epoch;
+} VIVEVars;
+
+struct LogPacket
+{
+	struct blinkData						blink;
+	struct parsedSecondaryProcessorPacket 	procData;
+	struct inertialData						inertial;
+	VIVEVars					pos;
+	uint32_t						tick_ms;
+	uint32_t						epoch;
+};
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

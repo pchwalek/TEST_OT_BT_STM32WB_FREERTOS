@@ -194,6 +194,7 @@ void SystemClock_Config(void)
   PeriphClkInitStruct.Lpuart1ClockSelection = RCC_LPUART1CLKSOURCE_PCLK1;
 
   /**
+   * TODO
    * This is what CubeMX generated
    * (you can correct this in CubeMX but I am fearful of a regeneration)
    */

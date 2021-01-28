@@ -69,7 +69,7 @@ typedef enum
 /* USER CODE END PTD */
 
 /* Private defines -----------------------------------------------------------*/
-#define APPBLE_GAP_DEVICE_NAME_LENGTH 7
+#define APPBLE_GAP_DEVICE_NAME_LENGTH 10
 #define FAST_ADV_TIMEOUT               (30*1000*1000/CFG_TS_TICK_VAL) /**< 30s */
 #define INITIAL_ADV_TIMEOUT            (120*1000*1000/CFG_TS_TICK_VAL) /**< 120s */
 
@@ -144,13 +144,13 @@ uint8_t index_con_int, mutex;
 #endif
 
 #if (CFG_BLE_PERIPHERAL != 0)
-static const char local_name[] = { AD_TYPE_COMPLETE_LOCAL_NAME, 'D', 'T', '_', 'S', 'E', 'R', 'V', 'E', 'R' };
+static const char local_name[] = { AD_TYPE_COMPLETE_LOCAL_NAME, 'C', 'A', 'P', 'T', 'I', 'V', 'A', 'T', 'E'};
 #endif
 
 uint8_t index_con_int, mutex;
 
 uint8_t const manuf_data[22] = { 2, AD_TYPE_TX_POWER_LEVEL, 0x00 /* 0 dBm */, /* Trasmission Power */
-		10, AD_TYPE_COMPLETE_LOCAL_NAME, 'D', 'T', '_', 'S', 'E', 'R', 'V', 'E', 'R', /* Complete Name */
+		10, AD_TYPE_COMPLETE_LOCAL_NAME, 'C', 'A', 'P', 'T', 'I', 'V', 'A', 'T', 'E', /* Complete Name */
 		7, AD_TYPE_MANUFACTURER_SPECIFIC_DATA, 0x01/*SKD version */,
 		CFG_DEV_ID_PERIPH_SERVER, /* NUCLEO-Board WB - DT Periph Server*/
 		0x00 /*  */, 0x00 /*  */, 0x00 /*  */,
@@ -1020,7 +1020,7 @@ static void Ble_Hci_Gap_Gatt_Init(void){
 
 	if (role > 0)
 	{
-		const char *name = "BLEcore";
+		const char *name = "CAPTIVATE";
 		aci_gap_init(role, 0,
 				APPBLE_GAP_DEVICE_NAME_LENGTH,
 				&gap_service_handle, &gap_dev_name_char_handle, &gap_appearance_char_handle);

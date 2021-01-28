@@ -53,6 +53,11 @@ typedef enum
   LED_GREEN  = LED2,
   LED_RED    = LED3
 }Led_TypeDef;
+
+
+
+
+
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

@@ -63,6 +63,7 @@ typedef struct
 /* Private variables ---------------------------------------------------------*/
 DTS_App_Context_t DataTransferServerContext;
 static uint8_t Notification_Data_Buffer[DATA_NOTIFICATION_MAX_PACKET_SIZE]; /* DATA_NOTIFICATION_MAX_PACKET_SIZE data + CRC */
+struct LogPacket Captivates_Test_Packet;
 uint32_t DataReceived;
 
 const osThreadAttr_t DataWriteProcess_attr = {
@@ -169,7 +170,8 @@ void DTS_App_Init(void)
   }
 
   DataTransferServerContext.NotificationTransferReq = DTS_APP_TRANSFER_REQ_OFF;
-  DataTransferServerContext.ButtonTransferReq = DTS_APP_TRANSFER_REQ_OFF;
+//  DataTransferServerContext.ButtonTransferReq = DTS_APP_TRANSFER_REQ_OFF;
+  DataTransferServerContext.ButtonTransferReq = DTS_APP_TRANSFER_REQ_ON;
   DataTransferServerContext.DtFlowStatus = DTS_APP_FLOW_ON;
 }
 
@@ -282,9 +284,13 @@ void SendData( void * argument )
     crc_result = APP_BLE_ComputeCRC8((uint8_t*) Notification_Data_Buffer, (DATA_NOTIFICATION_MAX_PACKET_SIZE - 1));
     Notification_Data_Buffer[DATA_NOTIFICATION_MAX_PACKET_SIZE - 1] = crc_result;
 
-    DataTransferServerContext.TxData.pPayload = Notification_Data_Buffer;
-    //DataTransferServerContext.TxData.Length = DATA_NOTIFICATION_MAX_PACKET_SIZE; /* DATA_NOTIFICATION_MAX_PACKET_SIZE */
-    DataTransferServerContext.TxData.Length =  DATA_NOTIFICATION_MAX_PACKET_SIZE; //Att_Mtu_Exchanged-10;
+//    DataTransferServerContext.TxData.pPayload = Notification_Data_Buffer;
+//    //DataTransferServerContext.TxData.Length = DATA_NOTIFICATION_MAX_PACKET_SIZE; /* DATA_NOTIFICATION_MAX_PACKET_SIZE */
+//    DataTransferServerContext.TxData.Length =  DATA_NOTIFICATION_MAX_PACKET_SIZE; //Att_Mtu_Exchanged-10;
+
+	DataTransferServerContext.TxData.pPayload = &Captivates_Test_Packet;
+	//DataTransferServerContext.TxData.Length = DATA_NOTIFICATION_MAX_PACKET_SIZE; /* DATA_NOTIFICATION_MAX_PACKET_SIZE */
+	DataTransferServerContext.TxData.Length =  sizeof(Captivates_Test_Packet); //Att_Mtu_Exchanged-10;
 
     status = DTS_STM_UpdateChar(DATA_TRANSFER_TX_CHAR_UUID, (uint8_t *) &DataTransferServerContext.TxData);
     if (status == BLE_STATUS_INSUFFICIENT_RESOURCES)
